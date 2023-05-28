@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const Comment = require('./comment');
-const Like = require('./like');
 
 const Comment = require('./comment')
 const Like = require('./like')
