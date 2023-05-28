@@ -6,6 +6,10 @@ const Post = require('./post');
 const Comment = require('./comment');
 const Like = require('./like');
 
+const Post = require('./post')
+const Comment = require('./comment')
+const Like = require('./like')
+
 const schema = new mongoose.Schema(
   {
     name: {

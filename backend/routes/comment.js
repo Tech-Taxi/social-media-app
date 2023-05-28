@@ -1,6 +1,7 @@
 const express = require('express');
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
+
 
 const {
   createComment,
@@ -21,4 +22,6 @@ router.route('/delete/:id').post(deleteComment);
 
 router.use(restrictTo('owner', 'admin'));
 
-router.route('/deleteByAdmin').post(deleteByAdmin);
+router.route('/deleteByAdmin').delete(deleteByAdmin);
+
+module.exports=router;
