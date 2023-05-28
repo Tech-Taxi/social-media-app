@@ -9,6 +9,8 @@ const {
   updatePost,
   deletePost,
   deleteByAdmin,
+  uploadPostPhoto,
+  resizePhoto,
 } = require('../controllers/post');
 const { protect, restrictTo } = require('../controllers/auth');
 
@@ -17,7 +19,7 @@ router.route('/:id').get(getPost);
 
 router.use(protect);
 
-router.route('/').post(createPost);
+router.route('/').post(uploadPostPhoto, resizePhoto, createPost);
 router.route('/update/:id').patch(updatePost);
 router.route('/delete/:id').delete(deletePost);
 

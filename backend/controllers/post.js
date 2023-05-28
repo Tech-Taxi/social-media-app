@@ -1,3 +1,5 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const Post = require('../models/post');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
@@ -19,9 +21,8 @@ exports.getPost = catchAsync(async (req, res, next) => {
 });
 
 exports.createPost = catchAsync(async (req, res, next) => {
-
-  if(!req.body.author) req.body.author=req.user.id
-
+  if (!req.body.author) req.body.author = req.user.id;
+  if (req.file) req.body.photo = req.file.filename;
   const post = await Post.create(req.body);
   post.active = undefined;
 
@@ -30,7 +31,6 @@ exports.createPost = catchAsync(async (req, res, next) => {
     data: post,
   });
 });
-
 
 exports.updatePost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.id);
@@ -63,28 +63,27 @@ exports.deletePost = catchAsync(async (req, res, next) => {
 });
 exports.deleteByAdmin = deleteOne(Post);
 
+const multerStorage = multer.memoryStorage();
 
-// const multerStorage = multer.memoryStorage();
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) cb(null, true);
+  else cb(new AppError('Not an image.', 400), false);
+};
 
-// const multerFilter = (req, file, cb) => {
-//   if (file.mimetype.startsWith('image')) cb(null, true);
-//   else cb(new AppError('Not an image.', 400), false);
-// };
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
 
-// const upload = multer({
-//   storage: multerStorage,
-//   fileFilter: multerFilter,
-// });
+exports.uploadPostPhoto = upload.single('photo');
 
-// exports.uploadPostPhoto = upload.single('photo');
-
-// exports.resizePhoto = (req, res, next) => {
-//   if (!req.file) return next();
-//   req.file.filename = `user-${req.user.id}-post-${req.params.id}-${Date.now()}.jpeg`;
-//   sharp(req.file.buffer)
-//     .resize(500, 500)
-//     .toFormat('jpeg')
-//     .jpeg({ quality: 90 })
-//     .toFile(`public/img/users/${req.file.filename}`);
-//   next();
-// };
+exports.resizePhoto = (req, res, next) => {
+  if (!req.file) return next();
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+  sharp(req.file.buffer)
+    .resize(1500, 1500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/posts/${req.file.filename}`);
+  next();
+};
