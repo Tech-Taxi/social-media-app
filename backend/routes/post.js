@@ -1,4 +1,6 @@
 const express = require('express');
+const comment = require('./comment');
+const like = require('./like');
 
 const router = express.Router();
 
@@ -12,7 +14,11 @@ const {
   uploadPostPhoto,
   resizePhoto,
 } = require('../controllers/post');
+
 const { protect, restrictTo } = require('../controllers/auth');
+
+router.use('/:postId/comment', comment);
+router.use('/:postId/like', like);
 
 router.route('/').get(getPosts);
 router.route('/:id').get(getPost);
@@ -27,4 +33,4 @@ router.use(restrictTo('owner', 'admin'));
 
 router.route('/deleteByAdmin').delete(deleteByAdmin);
 
-module.exports=router;
+module.exports = router;

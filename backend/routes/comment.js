@@ -1,6 +1,7 @@
 const express = require('express');
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
+
 
 const {
   createComment,
@@ -15,10 +16,12 @@ router.route('/').get(getComments);
 
 router.use(protect);
 
-router.route('/').post(createPost);
-router.route('/update/:id').post(updatePost);
-router.route('/delete/:id').post(deletePost);
+router.route('/').post(createComment);
+router.route('/update/:id').patch(updateComment);
+router.route('/delete/:id').delete(deleteComment);
 
 router.use(restrictTo('owner', 'admin'));
 
-router.route('/deleteByAdmin').post(deleteByAdmin);
+router.route('/deleteByAdmin').delete(deleteByAdmin);
+
+module.exports=router;
