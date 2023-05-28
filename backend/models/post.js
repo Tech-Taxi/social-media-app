@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Comment = require('./comment');
+const Like = require('./like');
 
 const schema = new mongoose.Schema(
   {

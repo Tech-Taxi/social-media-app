@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const Post = require('./post');
+const Comment = require('./comment');
+const Like = require('./like');
 
 const schema = new mongoose.Schema(
   {

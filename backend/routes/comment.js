@@ -15,9 +15,9 @@ router.route('/').get(getComments);
 
 router.use(protect);
 
-router.route('/').post(createPost);
-router.route('/update/:id').post(updatePost);
-router.route('/delete/:id').post(deletePost);
+router.route('/').post(createComment);
+router.route('/update/:id').post(updateComment);
+router.route('/delete/:id').post(deleteComment);
 
 router.use(restrictTo('owner', 'admin'));
 
