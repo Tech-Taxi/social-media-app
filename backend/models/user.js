@@ -3,9 +3,10 @@ const validator = require('validator');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
-const Post = require('./post')
-const Comment = require('./comment')
-const Like = require('./like')
+const Post = require('./post');
+const Comment = require('./comment');
+const Like = require('./like');
+const Follow = require('./follow');
 
 const schema = new mongoose.Schema(
   {
@@ -50,6 +51,7 @@ const schema = new mongoose.Schema(
       type: 'String',
       enum: ['user', 'admin', 'owner'],
       default: 'user',
+      select: false,
     },
     active: {
       type: Boolean,
@@ -63,6 +65,7 @@ const schema = new mongoose.Schema(
     googleLogin: {
       type: 'Boolean',
       default: false,
+      select: false,
     },
     passwordChangedAt: Date,
     passwordResetToken: String,
@@ -89,6 +92,18 @@ schema.virtual('comments', {
 schema.virtual('likes', {
   ref: 'Like',
   foreignField: 'user',
+  localField: '_id',
+});
+
+schema.virtual('followers', {
+  ref: 'Follow',
+  foreignField: 'to',
+  localField: '_id',
+});
+
+schema.virtual('following', {
+  ref: 'Follow',
+  foreignField: 'from',
   localField: '_id',
 });
 
@@ -127,6 +142,7 @@ schema.pre('save', async function (next) {
 
 schema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
+  this.select('-__v')
   next();
 });
 
