@@ -7,6 +7,12 @@ const xssClean = require('xss-clean');
 const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const corsOptions ={
+  origin:'*', 
+  credentials:true,
+  optionSuccessStatus:200
+}
 
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/error');
@@ -15,6 +21,9 @@ const user = require('./routes/user');
 const post = require('./routes/post');
 
 const app = express();
+
+// Cors Policy applied
+app.use(cors(corsOptions))
 
 // MIDDLEWARE STACK
 // 1. HTTP security headers
