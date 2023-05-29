@@ -87,7 +87,9 @@ exports.getUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.params.id)
     .populate('posts')
     .populate('comments')
-    .populate('likes');
+    .populate('likes')
+    .populate('followers')
+    .populate('following');
   if (!user) return next(new AppError('No user with that ID', 404));
 
   res.status(200).json({

@@ -1,5 +1,7 @@
 const express = require('express');
 const passport = require('passport');
+
+const follow = require('./follow')
 const {
   getUsers,
   updateMe,
@@ -25,6 +27,8 @@ require('../controllers/googleAuth');
 
 const router = express.Router();
 
+router.use('/user/:userId/follow', follow)
+
 router.route('/register').post(register);
 router.route('/login').post(login);
 router.route('/logout').get(logout);
@@ -43,6 +47,7 @@ router.get(
 );
 
 
+router.route('/').get(getUsers);
 router.route('/forgotPassword').post(forgotPassword);
 router.route('/resetPassword/:token').patch(resetPassword);
 
@@ -53,8 +58,7 @@ router.route('/me').get(getMe, getUser);
 router.route('/updateMe').patch(uploadUserPhoto, resizePhoto, updateMe);
 router.route('/deleteMe').delete(deleteMe);
 
-router.use(restrictTo('owner', 'admin'));
+// router.use(restrictTo('owner', 'admin'));
 
-router.route('/').get(getUsers);
 
 module.exports = router;
