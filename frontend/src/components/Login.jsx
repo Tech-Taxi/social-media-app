@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 const Login = () => {
@@ -14,7 +15,16 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    axios.post('http://localhost:5000/api/v1/users/login', {
+      "email": email,
+      "password": password
+    })
+    .then((response)=>{
+      console.log(response)
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
   };
 
   return (
