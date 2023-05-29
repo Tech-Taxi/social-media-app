@@ -27,7 +27,7 @@ const Signup = () => {
       <h2 className="text-2xl font-bold mb-4">Signup</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block mb-2 text-left" htmlFor="email">Email</label>
+          <label className="block text-left" htmlFor="email">Email</label>
           <input
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="email"
@@ -39,7 +39,7 @@ const Signup = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block mb-2 text-left" htmlFor="password">Password</label>
+          <label className="block text-left" htmlFor="password">Password</label>
           <input
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="password"
@@ -51,7 +51,7 @@ const Signup = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block mb-2 text-left" htmlFor="confirmPassword">Confirm Password</label>
+          <label className="block text-left" htmlFor="confirmPassword">Confirm Password</label>
           <input
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="password"
