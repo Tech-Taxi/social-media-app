@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -20,7 +22,10 @@ const Login = () => {
       "password": password
     })
     .then((response)=>{
-      console.log(response)
+      if(response.data.status === 'success'){
+        document.cookie = `user_id=${response.data.token}; max-age=31536000; path=/`;
+        navigate('/home');
+      }
     })
     .catch((error)=>{
       console.log(error)
