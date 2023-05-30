@@ -22,10 +22,6 @@ const schema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-    },
-    active: {
-      type: Boolean,
-      default: true,
       select: false,
     },
   },
@@ -35,24 +31,7 @@ const schema = new mongoose.Schema(
   },
 );
 
-
-schema.virtual('age').get(function () {
-  let time = (new Date() - this.createdAt) / (1000 * 60);
-
-  if (time < 60) return `${Math.floor(time)}min`;
-
-  time /= 60;
-  if (time < 24) return `${Math.floor(time)}hr`;
-
-  time /= 24;
-  if (time < 30) return `${Math.floor(time)}d`;
-
-  time /= 30;
-  if (time < 12) return `${Math.floor(time)}m`;
-
-  time /= 12;
-  return `${Math.floor(time)}yr`;
-});
+schema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 60 * 24 });
 
 schema.virtual('comments', {
   ref: 'Comment',
@@ -66,10 +45,5 @@ schema.virtual('likes', {
   localField: '_id',
 });
 
-schema.pre(/^find/, function (next) {
-  this.find({ active: { $ne: false } });
-  next();
-});
-
-const Post = mongoose.model('Post', schema);
-module.exports = Post;
+const Story = mongoose.model('Story', schema);
+module.exports = Story;

@@ -1,67 +1,67 @@
 const multer = require('multer');
 const sharp = require('sharp');
-const Post = require('../models/post');
+const Story = require('../models/story');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const { deleteOne, getAll } = require('./factory');
 
-exports.getPosts = getAll(Post);
-exports.getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findById(req.params.id)
+exports.getStorys = getAll(Story);
+exports.getStory = catchAsync(async (req, res, next) => {
+  const story = await Story.findById(req.params.id)
     .populate({ path: 'author', select: 'name photo' })
     .populate('comments')
     .populate('likes');
 
-  if (!post) return next(new AppError('No post with that ID', 404));
+  if (!story) return next(new AppError('No story with that ID', 404));
 
   res.status(200).json({
     status: 'success',
-    data: post,
+    data: story,
   });
 });
 
-exports.createPost = catchAsync(async (req, res, next) => {
+exports.createStory = catchAsync(async (req, res, next) => {
   if (!req.body.author) req.body.author = req.user.id;
   if (req.file) req.body.photo = req.file.filename;
-  const post = await Post.create(req.body);
-  post.active = undefined;
+  const story = await Story.create(req.body);
+  story.active = undefined;
 
   res.status(200).json({
     status: 'success',
-    data: post,
+    data: story,
   });
 });
 
-exports.updatePost = catchAsync(async (req, res, next) => {
-  const post = await Post.findById(req.params.id);
-  if (post.author.toString() !== req.user.id)
+exports.updateStory = catchAsync(async (req, res, next) => {
+  const story = await Story.findById(req.params.id);
+  if (story.author.toString() !== req.user.id)
     return next(
-      new AppError('You are not authorized to update that post', 401),
+      new AppError('You are not authorized to update that story', 401),
     );
 
-  const freshPost = await Post.findByIdAndUpdate(post._id, req.body, {
+  const freshStory = await Story.findByIdAndUpdate(story._id, req.body, {
     new: true,
   });
   res.status(200).json({
     status: 'success',
-    data: freshPost,
+    data: freshStory,
   });
 });
 
-exports.deletePost = catchAsync(async (req, res, next) => {
-  const post = await Post.findById(req.params.id);
-  if (post.author.toString() !== req.user.id)
+exports.deleteStory = catchAsync(async (req, res, next) => {
+  const story = await Story.findById(req.params.id);
+  if (story.author.toString() !== req.user.id)
     return next(
-      new AppError('You are not authorized to delete that post', 401),
+      new AppError('You are not authorized to delete that story', 401),
     );
 
-  await Post.findByIdAndUpdate(post._id, { active: false });
+  await Story.deleteOne({_id: story._id});
   res.status(204).json({
     status: 'success',
     data: null,
   });
 });
-exports.deleteByAdmin = deleteOne(Post);
+exports.deleteByAdmin = deleteOne(Story);
 
 const multerStorage = multer.memoryStorage();
 
@@ -75,7 +75,7 @@ const upload = multer({
   fileFilter: multerFilter,
 });
 
-exports.uploadPostPhoto = upload.single('photo');
+exports.uploadStoryPhoto = upload.single('photo');
 
 exports.resizePhoto = catchAsync(async(req, res, next) => {
   if (!req.file) return next();
@@ -84,6 +84,6 @@ exports.resizePhoto = catchAsync(async(req, res, next) => {
     .resize(1500, 1500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(`public/img/posts/${req.file.filename}`);
+    .toFile(`public/img/storys/${req.file.filename}`);
   next();
 });

@@ -1,6 +1,4 @@
 const passport = require('passport');
-const catchAsync = require('../utils/catchAsync');
-const Email = require('../utils/email');
 const User = require('../models/user');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 

@@ -1,5 +1,4 @@
 const Like = require('../models/like');
-const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.createLike = catchAsync(async (req, res, next) => {

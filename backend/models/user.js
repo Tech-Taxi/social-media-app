@@ -21,6 +21,11 @@ const schema = new mongoose.Schema(
       maxLength: 50,
       minLength: 5,
     },
+    gender: {
+      type: 'String',
+      enum: ['Male', 'Female', 'Other'],
+      required: [true, 'User must have a gender'],
+    },
     email: {
       type: 'String',
       validate: {
@@ -46,6 +51,10 @@ const schema = new mongoose.Schema(
         },
         message: 'Both passwords do not match',
       },
+    },
+    dob: {
+      type: 'Date',
+      required: [true, 'User must have a date of birth'],
     },
     role: {
       type: 'String',
@@ -107,6 +116,10 @@ schema.virtual('following', {
   localField: '_id',
 });
 
+schema.virtual('age').get(function () {
+  return Math.floor((new Date() - this.dob) / (1000 * 60 * 60 * 24 * 365.25));
+});
+
 schema.methods.correctPassword = async (pass, userPass) =>
   await bcrypt.compare(pass, userPass);
 
@@ -142,7 +155,7 @@ schema.pre('save', async function (next) {
 
 schema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
-  this.select('-__v')
+  this.select('-__v');
   next();
 });
 
