@@ -1,19 +1,71 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import user from "../images/user.jpg";
 import postImage from "../images/postImage.jpg";
-import { HeartIcon, ChatIcon, ArrowSmRightIcon } from '@heroicons/react/outline';
+import {
+  HeartIcon,
+  ChatIcon,
+  ArrowSmRightIcon,
+} from "@heroicons/react/outline";
+import axios from "axios";
+import CommentsModal from "./CommentsModal";
 
-function Post() {
+function Post(props) {
+  const [showModal, setShowModal] = useState(false);
   const [showFullCaption, setShowFullCaption] = useState(false);
+  const [likes, setLikes] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [author, setAuthor] = useState("");
+  const [captionText, setCaptionText] = useState("");
+  const [image, setImage] = useState("");
+
+  const [typedComment, setTypedComment] = useState("");
+
+  const handleCommentBox = (e) => {
+    setTypedComment(e.target.value);
+  };
+
   const handleToggleCaption = () => {
     setShowFullCaption(!showFullCaption);
   };
-  const captionText =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at nisi ac orci fermentum fermentum. Sed eget tristique risus. Integer tristique dolor sed vehicula vestibulum.";
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/v1/posts/${props.id}`)
+      .then((response) => {
+        setLikes(response.data.data.likes);
+        setComments(response.data.data.comments);
+        setAuthor(response.data.data.author.name);
+        setCaptionText(response.data.data.caption);
+        setImage(response.data.data.photo);
+      });
+  }, [props]);
+
   const truncatedCaption =
     captionText.length > 30
       ? captionText.substring(0, 30) + "..."
       : captionText;
+  const handleLike = () => {};
+  const postComment = () => {
+    if (typedComment === null || typedComment === "") {
+    } else {
+      axios
+        .post(`http://localhost:5000/api/v1/posts/${props.id}/comments`, {
+          content: typedComment,
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
   return (
     <div className="bg-white shadow-2xl overflow-hidden rounded-xl mb-4">
       <div className="p-3">
@@ -24,8 +76,8 @@ function Post() {
             className="w-10 h-10 rounded-full mr-4"
           />
           <div>
-            <p className="font-semibold text-gray-800">John Doe</p>
-            <p className="text-xs text-gray-500">5 hours ago</p>
+            <p className="font-semibold text-gray-800">{author}</p>
+            <p className="text-xs text-gray-500">2 hours ago</p>
           </div>
         </div>
         <div className="mx-1 my-2">
@@ -42,24 +94,48 @@ function Post() {
           </p>
         </div>
         <img
-          src={postImage} // "https://placeimg.com/640/640/nature"
+          src={image ? `http://localhost:5000/img/posts/${image}` : postImage}
           alt="Post"
           className="w-full object-cover"
         />
         <div className="mt-3 flex justify-between gap-2">
-            <div className="flex gap-2">
-                <HeartIcon className="w-6 h-6 text-gray-700" />
-                <ChatIcon className="w-6 h-6 text-gray-700" />
-            </div>
-            <div className="flex gap-2">
-                <input
-                type="text"
-                className="w-64 h-6 rounded-full px-2 my-0 py-0 border border-gray-300 focus:outline-none focus:border-blue-500"
-                placeholder="Enter text"
-                />
-                <ArrowSmRightIcon className="w-6 h-6 text-gray-700" />
-            </div>
-      </div>
+          <div>{likes.length} Likes</div>
+          <div className="cursor-pointer">{comments.length} Comments</div>
+        </div>
+        <div className="mt-3 flex justify-between gap-2">
+          <div className="flex gap-2">
+            <HeartIcon
+              className="w-6 h-6 text-gray-700 cursor-pointer"
+              onClick={handleLike}
+            />
+            <ChatIcon
+              className="w-6 h-6 text-gray-700 cursor-pointer"
+              onClick={openModal}
+            />
+            {showModal && (
+              <CommentsModal
+                photo={image}
+                likes={likes}
+                comments={comments}
+                isOpen={showModal}
+                onRequestClose={closeModal}
+              />
+            )}
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              className="w-64 h-6 rounded-full px-2 my-0 py-0 border border-gray-300 focus:outline-none focus:border-blue-500"
+              placeholder="Enter text"
+              value={typedComment}
+              onChange={handleCommentBox}
+            />
+            <ArrowSmRightIcon
+              className="w-6 h-6 text-gray-700 cursor-pointer"
+              onClick={postComment}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

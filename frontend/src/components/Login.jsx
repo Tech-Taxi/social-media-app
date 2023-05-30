@@ -1,29 +1,30 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const email=useRef();
+  const password=useRef();
   const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  // const handleEmailChange = (e) => {
+  //   setEmail(e.target.value);
+  // };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  // const handlePasswordChange = (e) => {
+  //   setPassword(e.target.value);
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:5000/api/v1/users/login', {
-      "email": email,
-      "password": password
+      "email": email.current.value,
+      "password": password.current.value
     })
     .then((response)=>{
       if(response.data.status === 'success'){
-        document.cookie = `user_id=${response.data.token}; max-age=31536000; path=/`;
+        // document.cookie = `user_id=${response.data.token}; max-age=31536000; path=/`;
+        // backend e cookie set hoye jabe
         navigate('/home');
       }
     })
@@ -41,9 +42,7 @@ const Login = () => {
           <input
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
+            ref={email}
             placeholder="Email"
             required
           />
@@ -53,9 +52,7 @@ const Login = () => {
           <input
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
+            ref={password}
             placeholder="Password"
             required
           />

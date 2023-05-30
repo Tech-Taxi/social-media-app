@@ -24,7 +24,7 @@ const app = express();
 
 // Cors Policy applied
 app.use(cors(corsOptions))
-
+app.use(express.static('public'))
 // MIDDLEWARE STACK
 // 1. HTTP security headers
 app.use(helmet());
