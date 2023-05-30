@@ -8,8 +8,9 @@ const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+
 const corsOptions = {
-  origin: '*',
+  origin: 'http://127.0.0.1:5500',
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -23,7 +24,7 @@ const story = require('./routes/story');
 
 const app = express();
 
-// Static public folder
+// Public folder
 app.use(express.static('public'))
 
 // MIDDLEWARE STACK

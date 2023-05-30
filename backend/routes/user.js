@@ -21,6 +21,7 @@ const {
   updatePassword,
   logout,
   googleSuccess,
+  isLoggedIn,
 } = require('../controllers/auth');
 
 require('../controllers/googleAuth');
@@ -29,6 +30,7 @@ const router = express.Router();
 
 router.use('/user/:userId/follow', follow)
 
+router.route('/isLoggedIn').get(isLoggedIn)
 router.route('/register').post(register);
 router.route('/login').post(login);
 router.route('/logout').get(logout);
