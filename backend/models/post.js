@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const Comment = require('./comment')
-const Like = require('./like')
+const Comment = require('./comment');
+const Like = require('./like');
 
 const schema = new mongoose.Schema(
   {
@@ -21,8 +21,7 @@ const schema = new mongoose.Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now(),
-      select: false,
+      default: Date.now,
     },
     active: {
       type: Boolean,
@@ -35,6 +34,25 @@ const schema = new mongoose.Schema(
     toObject: { virtuals: true },
   },
 );
+
+
+schema.virtual('age').get(function () {
+  let time = (new Date() - this.createdAt) / (1000 * 60);
+
+  if (time < 60) return `${Math.floor(time)}min`;
+
+  time /= 60;
+  if (time < 24) return `${Math.floor(time)}hr`;
+
+  time /= 24;
+  if (time < 30) return `${Math.floor(time)}d`;
+
+  time /= 30;
+  if (time < 12) return `${Math.floor(time)}m`;
+
+  time /= 12;
+  return `${Math.floor(time)}yr`;
+});
 
 schema.virtual('comments', {
   ref: 'Comment',
