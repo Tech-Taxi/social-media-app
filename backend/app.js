@@ -8,8 +8,9 @@ const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+
 const corsOptions = {
-  origin: 'http://localhost:5501',
+  origin: 'http://127.0.0.1:5500',
   credentials: true,
   optionSuccessStatus: 200,
 };

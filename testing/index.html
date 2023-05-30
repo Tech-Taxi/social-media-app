@@ -17,10 +17,16 @@
         const login = () => {
           console.log("LOGIN");
           axios
-            .post("http://localhost:5000/api/v1/users/login", {
-              email: "arnabbanik9@gmail.com",
-              password: "password1234",
-            })
+            .post(
+              "http://localhost:5000/api/v1/users/login",
+              {
+                email: "arnabbanik9@gmail.com",
+                password: "password1234",
+              },
+              {
+                withCredentials: true,
+              }
+            )
             .then((res) => {
               alert("logged in");
               console.log(res.data);
@@ -31,39 +37,16 @@
         };
 
         const checkLogin = () => {
-          // axios
-          //   .post(
-          //     "http://localhost:5000/api/v1/users/isLoggedIn",
-          //     {},
-          //     {
-          //       headers:header,
-          //       withCredentials: true,
-          //     }
-          //   )
-          //   .then((response) => {
-          //     // Handle the response data
-          //     console.log(response.data);
-          //   })
-          //   .catch((error) => {
-          //     // Handle any errors
-          //     console.error(error);
-          //   });
-          fetch("http://localhost:5000/api/v1/users/isLoggedIn", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": JSON.stringify(header),
-            },
-            body: JSON.stringify({}),
-            credentials: "include",
-          })
+          axios
+            .get("http://localhost:5000/api/v1/users/isLoggedIn", {
+              headers: header,
+              withCredentials: true,
+            })
             .then((response) => {
-              // Handle the response
-              return response.json();
-            }).then(res=> res)
+              console.log(response.data);
+            })
             .catch((error) => {
-              // Handle the error
-              console.log(error);
+              console.error(error);
             });
         };
         document.getElementById("login").addEventListener("click", login);
@@ -79,7 +62,7 @@
             {
               bio: "This is a test bio",
             },
-            { withCredential: true }
+            { withCredentials: true }
           )
           .then((res) => {
             console.log(res.data);
