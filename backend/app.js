@@ -22,10 +22,11 @@ const post = require('./routes/post');
 
 const app = express();
 
-// Cors Policy applied
-app.use(cors(corsOptions))
 
 // MIDDLEWARE STACK
+// 0. Cors Policy applied
+app.use(cors(corsOptions))
+
 // 1. HTTP security headers
 app.use(helmet());
 

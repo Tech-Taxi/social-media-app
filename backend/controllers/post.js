@@ -3,7 +3,7 @@ const sharp = require('sharp');
 const Post = require('../models/post');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
-const { deleteOne, updateOne, getOne, getAll, addOne } = require('./factory');
+const { deleteOne, getAll } = require('./factory');
 
 exports.getPosts = getAll(Post);
 exports.getPost = catchAsync(async (req, res, next) => {
@@ -77,13 +77,13 @@ const upload = multer({
 
 exports.uploadPostPhoto = upload.single('photo');
 
-exports.resizePhoto = (req, res, next) => {
+exports.resizePhoto = catchAsync(async(req, res, next) => {
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
-  sharp(req.file.buffer)
+  await sharp(req.file.buffer)
     .resize(1500, 1500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
     .toFile(`public/img/posts/${req.file.filename}`);
   next();
-};
+});
