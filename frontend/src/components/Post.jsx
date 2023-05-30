@@ -55,8 +55,8 @@ function Post(props) {
     } else {
       axios
         .post(`http://localhost:5000/api/v1/posts/${props.id}/comments`, {
-          content: typedComment,
-        })
+          content: typedComment
+        }, {withCredentials: true})
         .then((response) => {
           console.log(response);
         })
@@ -65,6 +65,33 @@ function Post(props) {
         });
     }
   };
+  // const postComment = () => {
+  //   sendCommentToBackend(typedComment)
+  //     .then(() => {
+  //       setTimeout(() => {
+  //         window.location.reload();
+  //       }, 1000);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error posting comment:", error);
+  //     });
+  // };
+  // const cookieValue = document.cookie
+  // const accessToken = cookieValue ? cookieValue.split('=')[1] : '';
+  // const sendCommentToBackend = (typedComment) => {
+  //   return axios.post(
+  //     `http://localhost:5000/api/v1/posts/${props.id}/comments`,
+  //     { content: typedComment },
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     }
+  //   );
+  //   // return new Promise((resolve) => {
+  //   //   setTimeout(resolve, 1000);
+  //   // });
+  // };
 
   return (
     <div className="bg-white shadow-2xl overflow-hidden rounded-xl mb-4">

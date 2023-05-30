@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { HeartIcon } from "@heroicons/react/solid";
+import { HeartIcon, XIcon } from "@heroicons/react/solid";
 import axios from "axios";
 
-function CommentsModal({ photo, likes, comments, showModal, setRequestClose }) {
-  const [isOpen, setIsOpen] = useState(showModal);
+function CommentsModal({ photo, likes, comments, isOpen, onRequestClose }) {
   const [allComments, setAllComments] = useState([]);
-  const openModal = () => {
-    setIsOpen(true);
-  };
 
   const closeModal = () => {
-    setIsOpen(false);
+    onRequestClose()
   };
 
   useEffect(() => {
@@ -31,9 +27,9 @@ function CommentsModal({ photo, likes, comments, showModal, setRequestClose }) {
     fetchComments();
   }, [comments]);
 
-//   if (!isOpen) {
-//     return null;
-//   } else {
+  if (!isOpen) {
+    return null;
+  } else {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
         <div className="bg-white w-full max-w-2xl mx-auto rounded-lg overflow-hidden">
@@ -49,6 +45,9 @@ function CommentsModal({ photo, likes, comments, showModal, setRequestClose }) {
 
             {/* Right Side - Comments, Like, Comment Box, Post Button */}
             <div className="p-4">
+              <div className="flex justify-end">
+                <XIcon  className="cursor-pointer w-6 h-6" onClick={closeModal}/>
+              </div>
               <div className="overflow-y-auto h-60">
                 {allComments.map((comment, index) => (
                   <div key={index} className="flex mb-2">
@@ -81,6 +80,6 @@ function CommentsModal({ photo, likes, comments, showModal, setRequestClose }) {
       </div>
     );
   }
-// }
+}
 
 export default CommentsModal;

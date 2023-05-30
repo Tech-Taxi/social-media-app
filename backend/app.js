@@ -23,9 +23,9 @@ const story = require('./routes/story');
 
 const app = express();
 
-// Cors Policy applied
-app.use(cors(corsOptions))
+// Static public folder
 app.use(express.static('public'))
+
 // MIDDLEWARE STACK
 // 0. Cors Policy applied
 app.use(cors(corsOptions));
