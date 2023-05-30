@@ -8,24 +8,24 @@ const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const corsOptions ={
-  origin:'*', 
-  credentials:true,
-  optionSuccessStatus:200
-}
+const corsOptions = {
+  origin: '*',
+  credentials: true,
+  optionSuccessStatus: 200,
+};
 
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/error');
 
 const user = require('./routes/user');
 const post = require('./routes/post');
+const story = require('./routes/story');
 
 const app = express();
 
-
 // MIDDLEWARE STACK
 // 0. Cors Policy applied
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 // 1. HTTP security headers
 app.use(helmet());
@@ -81,7 +81,10 @@ app.get('/', (req, res) => {
 app.use('/api/v1/users', user);
 
 // 2. Posts routes
-app.use('/api/v1/posts', post)
+app.use('/api/v1/posts', post);
+
+// 3. Story route
+app.use('/api/v1/stories', story);
 
 // 3. Unhandled routes
 app.all('*', (req, res, next) => {
