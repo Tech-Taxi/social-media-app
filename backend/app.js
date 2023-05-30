@@ -9,7 +9,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const corsOptions = {
-  origin: '*',
+  origin: 'http://localhost:5501',
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -23,9 +23,9 @@ const story = require('./routes/story');
 
 const app = express();
 
-// Cors Policy applied
-app.use(cors(corsOptions))
+// Public folder
 app.use(express.static('public'))
+
 // MIDDLEWARE STACK
 // 0. Cors Policy applied
 app.use(cors(corsOptions));

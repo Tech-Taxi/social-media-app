@@ -21,9 +21,12 @@ const sendToken = (user, status, res) => {
       Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true,
+    secure: true,
+    sameSite: 'None',
   };
-  if (process.env.NODE_ENV === 'PRODUCTION') cookieOptions.secure = true;
+  // if (process.env.NODE_ENV === 'PRODUCTION') cookieOptions.secure = true;
   res.cookie('jwt', token, cookieOptions);
+
   res.status(status).json({
     status: 'success',
     token,
@@ -60,7 +63,6 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.logout = (req, res) => {
   res.cookie('jwt', '', {
     expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
   });
   res.status(200).json({
     status: 'success',
@@ -76,7 +78,6 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   )
     token = req.headers.authorization.split(' ')[1];
-  else if (req.cookies.jwt) token = req.cookies.jwt;
 
   // console.log('token', token);
 
@@ -108,24 +109,40 @@ exports.isLoggedIn = async (req, res, next) => {
     let token;
 
     // 1. Check if token exists
-    if (req.cookies.jwt) token = req.cookies.jwt;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer')
+    )
+      token = req.headers.authorization.split(' ')[1];
 
-    if (!token) return next();
+    if (!token)
+      return res
+        .status(200)
+        .json({ status: 'fail', message: 'User is not logged in' });
 
     // 2. Verify token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_KEY);
 
     // 3. Check if the user exists
     const user = await User.findById(decoded.id);
-    if (!user) return next();
-
+    if (!user)
+      return res
+        .status(200)
+        .json({ status: 'fail', message: 'User is not logged in' });
     // 4. Check if user has changed password
-    if (user.changedPasswordAfter(decoded.iat)) return next();
+    if (user.changedPasswordAfter(decoded.iat))
+      return res
+        .status(200)
+        .json({ status: 'fail', message: 'User is not logged in' });
 
     res.locals.user = user;
-    next();
+    return res
+      .status(200)
+      .json({ status: 'success', message: 'User is logged in' });
   } catch (err) {
-    next();
+    return res
+      .status(200)
+      .json({ status: 'fail', message: 'User is not logged in' });
   }
 };
 

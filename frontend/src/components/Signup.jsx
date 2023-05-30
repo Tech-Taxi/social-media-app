@@ -1,44 +1,38 @@
-import React, { useRef } from 'react';
-import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
+import React, { useRef } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [confirmPassword, setConfirmPassword] = useState('');
-  const email=useRef();
-  const password=useRef();
-  const confirmPassword=useRef();
+  const name = useRef();
+  const email = useRef();
+  const password = useRef();
+  const confirmPassword = useRef();
+  const dob = useRef();
+  const gender = useRef();
   const navigate = useNavigate();
-  // const handleEmailChange = (e) => {
-  //   setEmail(e.target.value);
-  // };
-
-  // const handlePasswordChange = (e) => {
-  //   setPassword(e.target.value);
-  // };
-
-  // const handleConfirmPasswordChange = (e) => {
-  //   setConfirmPassword(e.target.value);
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/v1/users/register', {
-      "email": email.current.value,
-      "password": password.current.value,
-      "confirmPassword": confirmPassword.current.value
-    })
-    .then((response)=>{
-      if(response.data.status === 'success'){
-        // document.cookie = `user_id=${response.data.token}; max-age=31536000; path=/`;
-        // backend e cookie set hoye jabe
-        navigate('/home');
-      }
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
+    axios
+      .post("http://localhost:5000/api/v1/users/register", {
+        name: name.current.value,
+        email: email.current.value,
+        password: password.current.value,
+        confirmPassword: confirmPassword.current.value,
+        dob: dob.current.value,
+        gender: gender.current.value,
+      })
+      .then((response) => {
+        if (response.data.status === "success") {
+          // document.cookie = `user_id=${response.data.token}; max-age=31536000; path=/`;
+          // backend e cookie set hoye jabe
+          alert("Registered Successfully 🥳");
+          setTimeout(() => navigate("/home"), 1500);
+        }
+      })
+      .catch((error) => {
+        alert(error.reponse.data.message);
+      });
   };
 
   return (
@@ -50,17 +44,18 @@ const Signup = () => {
           <input
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="text"
-            // id="email"
-            // value={email}
-            // onChange={handleEmailChange}
             placeholder="Name"
+            ref={name}
             required
           />
+        </div>
+        <div className="mb-4">
           <label className="block text-left">Email</label>
           <input
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="email"
             placeholder="Email"
+            ref={email}
             required
           />
         </div>
@@ -70,6 +65,7 @@ const Signup = () => {
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="password"
             placeholder="Password"
+            ref={password}
             required
           />
         </div>
@@ -79,6 +75,43 @@ const Signup = () => {
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="password"
             placeholder="Confirm Password"
+            ref={confirmPassword}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-left">Gender</label>
+          <input
+            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            type="radio"
+            ref={gender}
+            value={"Male"}
+            name="gender"
+          />
+          <span className="mr-3">Male</span>
+          <input
+            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            type="radio"
+            ref={gender}
+            value={"Female"}
+            name="gender"
+          />
+          <span className="mr-3">Female</span>
+          <input
+            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            type="radio"
+            ref={gender}
+            value={"Other"}
+            name="gender"
+          />
+          <span className="mr-3">Other</span>
+        </div>
+        <div className="mb-4">
+          <label className="block text-left">Birthday</label>
+          <input
+            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            type="date"
+            ref={dob}
             required
           />
         </div>
