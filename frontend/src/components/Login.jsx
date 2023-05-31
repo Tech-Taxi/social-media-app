@@ -1,30 +1,30 @@
-import axios from 'axios';
-import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const email=useRef();
-  const password=useRef();
+  const email = useRef();
+  const password = useRef();
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/v1/users/login', {
-      "email": email.current.value,
-      "password": password.current.value
-    })
-    .then((response)=>{
-      if(response.data.status === 'success'){
-        // document.cookie = `user_id=${response.data.token}; max-age=31536000; path=/`;
-        // backend e cookie set hoye jabe
-        alert("Logged in Successfully 🥳")
-        console.log(response)
-        setTimeout(() => navigate("/"), 1500);
-        // navigate('/');
-      }
-    })
-    .catch((error)=>{
-      alert(error.response.data.message)
-    })
+    axios
+      .post("http://localhost:5000/api/v1/users/login", {
+        email: email.current.value,
+        password: password.current.value,
+      })
+      .then((response) => {
+        if (response.data.status === "success") {
+          alert("Logged in Successfully 🥳");
+          console.log(response);
+          setTimeout(() => navigate("/"), 1500);
+          navigate("/home");
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
   };
 
   return (

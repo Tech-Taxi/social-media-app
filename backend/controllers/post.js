@@ -8,7 +8,6 @@ const { deleteOne, getAll } = require('./factory');
 exports.getPosts = getAll(Post);
 exports.getPost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.id)
-    .populate({ path: 'author', select: 'name photo' })
     .populate('comments')
     .populate('likes');
 

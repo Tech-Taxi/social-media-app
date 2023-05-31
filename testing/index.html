@@ -49,31 +49,34 @@
               console.error(error);
             });
         };
-        document.getElementById("login").addEventListener("click", login);
-        document
-          .getElementById("checklogin")
-          .addEventListener("click", checkLogin);
-      };
+        const update = () => {
+          console.log("UPDATE")
+          axios
+            .patch(
+              "http://localhost:5000/api/v1/users/udpateMe",
+              {
+                bio: "This is a test bio",
+              },
+              { withCredentials: true }
+            )
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          document.getElementById("login").addEventListener("click", login);
+          document
+            .getElementById("checklogin")
+            .addEventListener("click", checkLogin);
 
-      const update = () => {
-        axios
-          .patch(
-            "http://localhost:5000/api/v1/users/udpateMe",
-            {
-              bio: "This is a test bio",
-            },
-            { withCredentials: true }
-          )
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+          document.getElementById("update").addEventListener("click", update);
+        };
       };
     </script>
 
     <button id="login">Login</button>
     <button id="checklogin">Check Login</button>
+    <button id="update">Update Bio</button>
   </body>
 </html>

@@ -24,10 +24,8 @@ const Signup = () => {
       })
       .then((response) => {
         if (response.data.status === "success") {
-          // document.cookie = `user_id=${response.data.token}; max-age=31536000; path=/`;
-          // backend e cookie set hoye jabe
           alert("Registered Successfully 🥳");
-          setTimeout(() => navigate("/home"), 1500);
+          setTimeout(() => navigate("/"), 1500);
         }
       })
       .catch((error) => {

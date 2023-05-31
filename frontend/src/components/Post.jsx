@@ -44,6 +44,19 @@ function Post(props) {
         setImage(response.data.data.photo);
       });
   }, [props]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:5000/api/v1/posts/${props.id}`, {
+  //       withCredentials: true,
+  //     })
+  //     .then((response) => {
+  //       setLikes(response.data.data.likes);
+  //       setComments(response.data.data.comments);
+  //       setAuthor(response.data.data.author.name);
+  //       setCaptionText(response.data.data.caption);
+  //       setImage(response.data.data.photo);
+  //     });
+  // }, [props]);
 
   const truncatedCaption =
     captionText.length > 30
@@ -56,11 +69,15 @@ function Post(props) {
     if (typedComment === null || typedComment === "") {
     } else {
       axios
-        .post(`http://localhost:5000/api/v1/posts/${props.id}/comments`, {
-          content: typedComment
-        }, {withCredentials: true})
+        .post(
+          `http://localhost:5000/api/v1/posts/${props.id}/comments`,
+          {
+            content: typedComment,
+          },
+          { withCredentials: true }
+        )
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
