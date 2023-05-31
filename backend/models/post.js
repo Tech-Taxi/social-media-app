@@ -35,7 +35,6 @@ const schema = new mongoose.Schema(
   },
 );
 
-
 schema.virtual('age').get(function () {
   let time = (new Date() - this.createdAt) / (1000 * 60);
 
@@ -68,6 +67,7 @@ schema.virtual('likes', {
 
 schema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
+  this.populate({ path: 'author', select: 'name photo' });
   next();
 });
 
