@@ -33,17 +33,19 @@ function Post(props) {
   const closeModal = () => {
     setShowModal(false);
   };
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/v1/posts/${props.id}`)
-      .then((response) => {
-        setLikes(response.data.data.likes);
-        setComments(response.data.data.comments);
-        setAuthor(response.data.data.author.name);
-        setCaptionText(response.data.data.caption);
-        setImage(response.data.data.photo);
-      });
-  }, [props]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:5000/api/v1/posts/${props.id}`, {
+  //       withCredentials: true,
+  //     })
+  //     .then((response) => {
+  //       setLikes(response.data.data.likes);
+  //       setComments(response.data.data.comments);
+  //       setAuthor(response.data.data.author.name);
+  //       setCaptionText(response.data.data.caption);
+  //       setImage(response.data.data.photo);
+  //     });
+  // }, [props]);
 
   const truncatedCaption =
     captionText.length > 30
@@ -54,44 +56,21 @@ function Post(props) {
     if (typedComment === null || typedComment === "") {
     } else {
       axios
-        .post(`http://localhost:5000/api/v1/posts/${props.id}/comments`, {
-          content: typedComment
-        }, {withCredentials: true})
+        .post(
+          `http://localhost:5000/api/v1/posts/${props.id}/comments`,
+          {
+            content: typedComment,
+          },
+          { withCredentials: true }
+        )
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
         });
     }
   };
-  // const postComment = () => {
-  //   sendCommentToBackend(typedComment)
-  //     .then(() => {
-  //       setTimeout(() => {
-  //         window.location.reload();
-  //       }, 1000);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error posting comment:", error);
-  //     });
-  // };
-  // const cookieValue = document.cookie
-  // const accessToken = cookieValue ? cookieValue.split('=')[1] : '';
-  // const sendCommentToBackend = (typedComment) => {
-  //   return axios.post(
-  //     `http://localhost:5000/api/v1/posts/${props.id}/comments`,
-  //     { content: typedComment },
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     }
-  //   );
-  //   // return new Promise((resolve) => {
-  //   //   setTimeout(resolve, 1000);
-  //   // });
-  // };
 
   return (
     <div className="bg-white shadow-2xl overflow-hidden rounded-xl mb-4">

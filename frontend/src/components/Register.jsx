@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
+import { useLocation } from 'react-router-dom';
 
 const LoginPage = () => {
-  const [activeComponent, setActiveComponent] = useState('login');
+  const location = useLocation();
+  const [activeComponent, setActiveComponent] = useState(location.state.active);
 
   const handleToggleComponent = (component) => {
     setActiveComponent(component);
