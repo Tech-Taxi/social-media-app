@@ -18,8 +18,8 @@ const Login = () => {
         // backend e cookie set hoye jabe
         alert("Logged in Successfully 🥳")
         console.log(response)
-        setTimeout(() => navigate("/home"), 1500);
-        navigate('/home');
+        setTimeout(() => navigate("/"), 1500);
+        // navigate('/');
       }
     })
     .catch((error)=>{

@@ -35,7 +35,7 @@ function Post(props) {
   };
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/v1/posts/${props.id}`)
+      .get(`http://localhost:5000/api/v1/posts/${props.id}`, {withCredentials: true})
       .then((response) => {
         setLikes(response.data.data.likes);
         setComments(response.data.data.comments);
@@ -49,7 +49,9 @@ function Post(props) {
     captionText.length > 30
       ? captionText.substring(0, 30) + "..."
       : captionText;
+
   const handleLike = () => {};
+  
   const postComment = () => {
     if (typedComment === null || typedComment === "") {
     } else {
@@ -65,33 +67,6 @@ function Post(props) {
         });
     }
   };
-  // const postComment = () => {
-  //   sendCommentToBackend(typedComment)
-  //     .then(() => {
-  //       setTimeout(() => {
-  //         window.location.reload();
-  //       }, 1000);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error posting comment:", error);
-  //     });
-  // };
-  // const cookieValue = document.cookie
-  // const accessToken = cookieValue ? cookieValue.split('=')[1] : '';
-  // const sendCommentToBackend = (typedComment) => {
-  //   return axios.post(
-  //     `http://localhost:5000/api/v1/posts/${props.id}/comments`,
-  //     { content: typedComment },
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     }
-  //   );
-  //   // return new Promise((resolve) => {
-  //   //   setTimeout(resolve, 1000);
-  //   // });
-  // };
 
   return (
     <div className="bg-white shadow-2xl overflow-hidden rounded-xl mb-4">
