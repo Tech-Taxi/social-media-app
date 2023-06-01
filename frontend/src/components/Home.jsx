@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import Feed from "./Feed.jsx";
 import axios from "axios";
-import Navbar from "./Navbar.js";
+import Navbar from "./Navbar.jsx";
+import CreatePost from "./CreatePost.jsx";
 
 // const isLoggedIn = () => {
 //   axios
@@ -19,11 +20,16 @@ function Home() {
         <Navbar />
       </div>
       <div className="flex mt-16">
-        <div className="w-1/3 bg-00"></div>
         <div className="w-1/3">
+
+        </div>
+        <div className="w-1/3">
+          <CreatePost />
           <Feed />
         </div>
-        <div className="w-1/3 bg-00"></div>
+        <div className="w-1/3">
+          
+        </div>
       </div>
     </div>
   );
