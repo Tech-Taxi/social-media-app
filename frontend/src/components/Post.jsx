@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import user from "../images/user.jpg";
-import postImage from "../images/postImage.jpg";
+import React, { useState, useEffect, useContext } from "react";
 import {
-  HeartIcon,
+  HeartIcon as HeartOutline,
   ChatIcon,
   ArrowSmRightIcon,
 } from "@heroicons/react/outline";
+import { HeartIcon as HeartSolid } from "@heroicons/react/solid";
 import axios from "axios";
 import CommentsModal from "./CommentsModal";
+import { UserContext } from "../contexts/UserContext";
 
 function Post(props) {
   const [showModal, setShowModal] = useState(false);
   const [showFullCaption, setShowFullCaption] = useState(false);
-  const [likes, setLikes] = useState([]);
-  const [comments, setComments] = useState([]);
-  const [author, setAuthor] = useState("");
-  const [captionText, setCaptionText] = useState("");
-  const [image, setImage] = useState("");
-
   const [typedComment, setTypedComment] = useState("");
+  const [isLiked, setLiked] = useState(false);
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) setLiked(props.likes.includes(user.id));
+  }, [user]);
 
   const handleCommentBox = (e) => {
     setTypedComment(e.target.value);
@@ -33,51 +33,38 @@ function Post(props) {
   const closeModal = () => {
     setShowModal(false);
   };
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/v1/posts/${props.id}`, {withCredentials: true})
-      .then((response) => {
-        setLikes(response.data.data.likes);
-        setComments(response.data.data.comments);
-        setAuthor(response.data.data.author.name);
-        setCaptionText(response.data.data.caption);
-        setImage(response.data.data.photo);
-      });
-  }, [props]);
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:5000/api/v1/posts/${props.id}`, {
-  //       withCredentials: true,
-  //     })
-  //     .then((response) => {
-  //       setLikes(response.data.data.likes);
-  //       setComments(response.data.data.comments);
-  //       setAuthor(response.data.data.author.name);
-  //       setCaptionText(response.data.data.caption);
-  //       setImage(response.data.data.photo);
-  //     });
-  // }, [props]);
 
   const truncatedCaption =
-    captionText.length > 30
-      ? captionText.substring(0, 30) + "..."
-      : captionText;
+    props.caption.length > 30
+      ? props.caption.substring(0, 30) + "... "
+      : props.caption;
 
-  const handleLike = () => {};
-  
+  const handleLike = () => {
+    axios
+      .post(
+        `http://localhost:5000/api/v1/posts/${props.id}/like`,
+        {},
+        { withCredentials: true }
+      )
+      .then((res) => setLiked(() => !isLiked))
+      .catch((err) => console.log(err));
+  };
+
   const postComment = () => {
     if (typedComment === null || typedComment === "") {
     } else {
       axios
         .post(
-          `http://localhost:5000/api/v1/posts/${props.id}/comments`,
+          `http://localhost:5000/api/v1/posts/${props.id}/comment`,
           {
             content: typedComment,
           },
           { withCredentials: true }
         )
         .then((response) => {
+          alert("You've commented successfully 🥳");
           console.log(response.data);
+          setTypedComment("");
         })
         .catch((error) => {
           console.log(error);
@@ -90,56 +77,64 @@ function Post(props) {
       <div className="p-3">
         <div className="flex items-center">
           <img
-            src={user}
+            src={`http://localhost:5000/img/users/${props.authorimg}`}
             alt="User Avatar"
             className="w-10 h-10 rounded-full mr-4"
           />
           <div>
-            <p className="font-semibold text-gray-800">{author}</p>
-            <p className="text-xs text-gray-500">2 hours ago</p>
+            <p className="font-semibold text-gray-800">{props.author}</p>
+            <p className="text-xs text-gray-500">{props.age}</p>
           </div>
         </div>
         <div className="mx-1 my-2">
           <p className="text-gray-700 text-left">
-            {showFullCaption ? captionText : truncatedCaption}
-            {captionText.length > 30 && (
+            {showFullCaption ? props.caption : truncatedCaption}
+            {props.caption.length > 30 && (
               <button
-                className="text-gray-800 hover:text-blue-700 font-medium"
+                className="text-gray-800 hover:text-blue-700 font-medium ml-1"
                 onClick={handleToggleCaption}
               >
-                {showFullCaption ? " Read less" : " Read more"}
+                {showFullCaption ? "Read less" : "Read more"}
               </button>
             )}
           </p>
         </div>
         <img
-          src={image ? `http://localhost:5000/img/posts/${image}` : postImage}
+          src={`http://localhost:5000/img/posts/${props.photo}`}
           alt="Post"
           className="w-full object-cover"
         />
         <div className="mt-3 flex justify-between gap-2">
-          <div>{likes.length} Likes</div>
-          <div className="cursor-pointer">{comments.length} Comments</div>
+          <div>{props.likes.length} Likes</div>
+          <div className="cursor-pointer">{3} Comments</div>
         </div>
         <div className="mt-3 flex justify-between gap-2">
           <div className="flex gap-2">
-            <HeartIcon
-              className="w-6 h-6 text-gray-700 cursor-pointer"
-              onClick={handleLike}
-            />
+            {isLiked ? (
+              <HeartSolid
+                className="w-6 h-6 text-red-700 cursor-pointer"
+                onClick={handleLike}
+              />
+            ) : (
+              <HeartOutline
+                className="w-6 h-6 text-gray-700 cursor-pointer"
+                onClick={handleLike}
+              />
+            )}
+
             <ChatIcon
               className="w-6 h-6 text-gray-700 cursor-pointer"
               onClick={openModal}
             />
-            {showModal && (
+            {/* {showModal && (
               <CommentsModal
-                photo={image}
+                photo={props.photo}
                 likes={likes}
                 comments={comments}
                 isOpen={showModal}
                 onRequestClose={closeModal}
               />
-            )}
+            )} */}
           </div>
           <div className="flex gap-2">
             <input

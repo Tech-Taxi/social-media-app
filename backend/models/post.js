@@ -67,7 +67,9 @@ schema.virtual('likes', {
 
 schema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
-  this.populate({ path: 'author', select: 'name photo' });
+  this.populate({ path: 'author', select: 'name photo' }).populate({
+    path: 'likes',
+  });
   next();
 });
 

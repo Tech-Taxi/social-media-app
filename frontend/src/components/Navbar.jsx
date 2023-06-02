@@ -1,28 +1,51 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
+import axios from "axios";
 
 const Navbar = () => {
-    const navigate = useNavigate();
-    const handleLogin = (e) => {
-        navigate('/register', {state: {active: e}})
-    }
+  const { toggleD, d, user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const handleLogin = (e) => {
+    // navigate('/register', {state: {active: e}})
+    toggleD(() => !d);
+  };
 
-// If the user exists in the context, then instead of displaying the regular things, display the user specific information.
+  const handleLogout = () => {
+    axios
+      .get("http://localhost:5000/api/v1/users/logout", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        alert("Logged Out successfully 🥳");
+        setTimeout(navigate(0), 1500);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // If the user exists in the context, then instead of displaying the regular things, display the user specific information.
 
   return (
     <div className="h-14 items-center flex bg-white">
       <div className="w-1/2 flex justify-start gap-5 mx-6 px-6">
-        <h1 className="text-2xl font-semibold text-blue-700">
-            Social Media
-        </h1>
+        <h1 className="text-2xl font-semibold text-blue-700">Social Media</h1>
       </div>
       <div className="w-1/2 flex justify-end gap-5 mx-6 px-6">
-        <button className="text-blue-500 font-medium border-b-2 border-transparent hover:border-blue-400 py-1 px-3" onClick={() => handleLogin("login")}>
-          Log in
-        </button>
-        <button className="bg-blue-500 text-white font-medium border-b-2 border-transparent py-1 px-3" onClick={() => handleLogin("register")}>
-          Sign Up
-        </button>
+        {!user ? (
+          <button
+            className="bg-blue-500 text-white font-medium border-b-2 border-transparent py-1 px-3"
+            onClick={() => handleLogin("register")}
+          >
+            Log In
+          </button>
+        ) : (
+          <button
+            className="bg-red-500 text-white font-medium border-b-2 border-transparent py-1 px-3"
+            onClick={() => handleLogout()}
+          >
+            Log Out
+          </button>
+        )}
       </div>
     </div>
   );
