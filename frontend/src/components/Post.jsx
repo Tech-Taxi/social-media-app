@@ -15,7 +15,6 @@ function Post(props) {
   const [typedComment, setTypedComment] = useState("");
   const [isLiked, setLiked] = useState(false);
   const { user } = useContext(UserContext);
-
   useEffect(() => {
     if (user) setLiked(props.likes.includes(user.id));
   }, [user]);
@@ -83,7 +82,7 @@ function Post(props) {
           />
           <div>
             <p className="font-semibold text-gray-800">{props.author}</p>
-            <p className="text-xs text-gray-500">{props.age}</p>
+            <p className="text-xs text-gray-500 text-left">{props.age}</p>
           </div>
         </div>
         <div className="mx-1 my-2">
