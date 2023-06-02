@@ -5,11 +5,18 @@ const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const { deleteOne, getAll } = require('./factory');
 
-exports.getPosts = getAll(Post);
+exports.getPosts = catchAsync(async (req, res, next) => {
+  let posts = await Post.find({});
+  posts.map(post => post.likes=post.likes.map(like => like.user))
+  res.status(200).json({
+    status: 'success',
+    data: { posts },
+    count: posts.length,
+  });
+});
 exports.getPost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.id)
-    .populate('comments')
-    .populate('likes');
+    .populate('comments');
 
   if (!post) return next(new AppError('No post with that ID', 404));
 

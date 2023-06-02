@@ -1,29 +1,36 @@
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {UserContext} from "../contexts/UserContext";
 
 const Login = () => {
   const email = useRef();
   const password = useRef();
-  const navigate = useNavigate();
+
+  const {toggleD} = useContext(UserContext)
+
+  const {setUser, user} = useContext(UserContext)
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/api/v1/users/login", {
-        email: email.current.value,
-        password: password.current.value,
-      })
+      .post(
+        "http://localhost:5000/api/v1/users/login",
+        {
+          email: email.current.value,
+          password: password.current.value,
+        },
+        { withCredentials: true }
+      )
       .then((response) => {
         if (response.data.status === "success") {
           alert("Logged in Successfully 🥳");
-          console.log(response);
-          setTimeout(() => navigate("/"), 1500);
-          navigate("/home");
+          setUser(response.data.user);
+          toggleD(false);
         }
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        alert(error);
       });
   };
 
