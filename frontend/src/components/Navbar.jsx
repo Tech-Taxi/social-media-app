@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
+import UserMenu from "./UserMenu";
 
 const Navbar = () => {
   const { toggleD, d, user } = useContext(UserContext);
@@ -39,12 +40,9 @@ const Navbar = () => {
             Log In
           </button>
         ) : (
-          <button
-            className="bg-red-500 text-white font-medium border-b-2 border-transparent py-1 px-3"
-            onClick={() => handleLogout()}
-          >
-            Log Out
-          </button>
+          <div className="w-12 h-12 rounded-full bg-gray-200">
+            <UserMenu />
+          </div>
         )}
       </div>
     </div>

@@ -21,14 +21,11 @@ function Home() {
           setUser(data.data.data)
         }
         catch(err){
-          console.log(err)
+          console.log(err.response.data.message)
         }
       },
     []
   );
-
-  useEffect(() => console.log(user), [user])
-
   return (
     <div className="mx-4 my-2">
       <UserContext.Provider value={{ user, setUser, d, toggleD }}>

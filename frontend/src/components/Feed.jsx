@@ -17,7 +17,7 @@ function Feed() {
         console.log(error);
         setLoading(false);
       });
-  }, [posts]);
+  }, []);
 
   return (
     <div>

@@ -3,19 +3,34 @@ const sharp = require('sharp');
 const Post = require('../models/post');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
+const APIFeatures=require('../utils/apiFeatures')
 const { deleteOne, getAll } = require('./factory');
 
 exports.getPosts = catchAsync(async (req, res, next) => {
-  let posts = await Post.find({});
+  // let posts = await Post.find({});
+  // posts.map(post => post.likes=post.likes.map(like => like.user))
+  // res.status(200).json({
+  //   status: 'success',
+  //   data: { posts },
+  //   count: posts.length,
+  // });
+
+  req.query.sort = '-createdAt'
+  const features = new APIFeatures(Post.find(), req.query)
+		.filter()
+		.sort()
+		.fields()
+		.paginate()
+	let posts = await features.query
   posts.map(post => post.likes=post.likes.map(like => like.user))
-  res.status(200).json({
-    status: 'success',
-    data: { posts },
-    count: posts.length,
-  });
+	res.status(200).json({
+		status: 'success',
+		data: {posts},
+		count: posts.length,
+	})
 });
 exports.getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findById(req.params.id)
+  const post = await Post.findById(req.params.id).sort('-createdAt')
     .populate('comments');
 
   if (!post) return next(new AppError('No post with that ID', 404));
