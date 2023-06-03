@@ -19,9 +19,9 @@ function Post(props) {
     if (user) setLiked(props.likes.includes(user.id));
   }, [user]);
 
-  useEffect(() => {
-    console.log(props.photo);
-  });
+  // useEffect(() => {
+  //   console.log(props.photo);
+  // });
 
   const handleCommentBox = (e) => {
     setTypedComment(e.target.value);

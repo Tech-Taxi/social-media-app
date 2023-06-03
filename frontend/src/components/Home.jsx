@@ -5,6 +5,7 @@ import CreatePost from "./CreatePost.jsx";
 import { UserContext } from "../contexts/UserContext.js";
 import Register from "./Register.jsx";
 import axios from "axios";
+import Connections from "./Connections.jsx";
 
 function Home() {
   const [user, setUser] = useState();
@@ -40,7 +41,9 @@ function Home() {
               <CreatePost />
               <Feed />
             </div>
-            <div className="w-1/3"></div>
+            <div className="w-1/3">
+              <Connections />
+            </div>
           </div>
         </>
       </UserContext.Provider>
