@@ -3,7 +3,7 @@ const sharp = require('sharp');
 const Post = require('../models/post');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
-const APIFeatures=require('../utils/apiFeatures')
+const APIFeatures = require('../utils/apiFeatures');
 const { deleteOne, getAll } = require('./factory');
 
 exports.getPosts = catchAsync(async (req, res, next) => {
@@ -15,22 +15,24 @@ exports.getPosts = catchAsync(async (req, res, next) => {
   //   count: posts.length,
   // });
 
-  req.query.sort = '-createdAt'
+  req.query.sort = '-createdAt';
   const features = new APIFeatures(Post.find(), req.query)
-		.filter()
-		.sort()
-		.fields()
-		.paginate()
-	let posts = await features.query
-  posts.map(post => post.likes=post.likes.map(like => like.user))
-	res.status(200).json({
-		status: 'success',
-		data: {posts},
-		count: posts.length,
-	})
+    .filter()
+    .sort()
+    .fields()
+    .paginate();
+  let posts = await features.query;
+  posts.map((post) => (post.likes = post.likes.map((like) => like.user)));
+  
+  res.status(200).json({
+    status: 'success',
+    data: { posts },
+    count: posts.length,
+  });
 });
 exports.getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findById(req.params.id).sort('-createdAt')
+  const post = await Post.findById(req.params.id)
+    .sort('-createdAt')
     .populate('comments');
 
   if (!post) return next(new AppError('No post with that ID', 404));
@@ -98,7 +100,7 @@ const upload = multer({
 
 exports.uploadPostPhoto = upload.single('photo');
 
-exports.resizePhoto = catchAsync(async(req, res, next) => {
+exports.resizePhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
   await sharp(req.file.buffer)

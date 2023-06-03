@@ -65,11 +65,22 @@ schema.virtual('likes', {
   localField: '_id',
 });
 
+schema.virtual('likeCount').get(function () {
+  return this.likes.length;
+});
+
+schema.virtual('commentCount').get(function () {
+  return this.comments.length;
+});
+
 schema.pre(/^find/, function (next) {
   this.find({ active: { $ne: false } });
-  this.populate({ path: 'author', select: 'name photo' }).populate({
-    path: 'likes',
-  });
+  this.populate({ path: 'author', select: 'name photo' })
+    .populate({
+      path: 'likes',
+      select: 'post',
+    })
+    .populate({ path: 'comments', select: 'post' })
   next();
 });
 

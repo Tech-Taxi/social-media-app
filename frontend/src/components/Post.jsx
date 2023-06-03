@@ -113,7 +113,7 @@ function Post(props) {
         )}
         <div className="mt-3 flex justify-between gap-2">
           <div>{props.likes.length} Likes</div>
-          <div className="cursor-pointer">{3} Comments</div>
+          <div className="cursor-pointer">{props.commentCount} Comments</div>
         </div>
         <div className="mt-3 flex justify-between gap-2">
           <div className="flex gap-2">

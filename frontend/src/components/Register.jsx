@@ -1,12 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, {  useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
 // import { useLocation } from 'react-router-dom';
-import {UserContext} from '../contexts/UserContext';
 
 const LoginPage = () => {
-  const { user }=useContext(UserContext)
-  // const location = useLocation();
   const [activeComponent, setActiveComponent] = useState('login');
 
   const handleToggleComponent = (component) => {

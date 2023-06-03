@@ -11,6 +11,7 @@ function Feed() {
       .get("http://localhost:5000/api/v1/posts", { withCredentials: true })
       .then((response) => {
         setPosts(response.data.data.posts);
+        console.log(response.data.data.posts)
         setLoading(false);
       })
       .catch((error) => {
@@ -42,6 +43,7 @@ function Feed() {
             caption={post.caption}
             photo={post.photo}
             likes={post.likes}
+            comments={post.commentCount}
           />
         ))
       )}

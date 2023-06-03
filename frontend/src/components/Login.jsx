@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { useRef, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useRef, useContext } from "react";
 import {UserContext} from "../contexts/UserContext";
 
 const Login = () => {
@@ -9,7 +8,7 @@ const Login = () => {
 
   const {toggleD} = useContext(UserContext)
 
-  const {setUser, user} = useContext(UserContext)
+  const {setUser} = useContext(UserContext)
 
   const handleSubmit = (e) => {
     e.preventDefault();
