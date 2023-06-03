@@ -78,7 +78,7 @@ schema.pre(/^find/, function (next) {
   this.populate({ path: 'author', select: 'name photo' })
     .populate({
       path: 'likes',
-      select: 'post',
+      select: 'post user',
     })
     .populate({ path: 'comments', select: 'post' })
   next();

@@ -17,11 +17,7 @@ function Post(props) {
   const { user } = useContext(UserContext);
   useEffect(() => {
     if (user) setLiked(props.likes.includes(user.id));
-  }, [user]);
-
-  // useEffect(() => {
-  //   console.log(props.photo);
-  // });
+  }, [user])
 
   const handleCommentBox = (e) => {
     setTypedComment(e.target.value);
@@ -52,7 +48,7 @@ function Post(props) {
       .then((res) => {
         setLiked(() => !isLiked);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err.response.data.message));
   };
 
   const postComment = () => {
@@ -71,8 +67,8 @@ function Post(props) {
           console.log(response.data);
           setTypedComment("");
         })
-        .catch((error) => {
-          console.log(error);
+        .catch((err) => {
+          alert(err.response.data.message)
         });
     }
   };
@@ -104,7 +100,7 @@ function Post(props) {
             )}
           </p>
         </div>
-        {props.photo && (
+        {props.photo!=="null" && (
           <img
             src={`http://localhost:5000/img/posts/${props.photo}`}
             alt=""
@@ -113,7 +109,7 @@ function Post(props) {
         )}
         <div className="mt-3 flex justify-between gap-2">
           <div>{props.likes.length} Likes</div>
-          <div className="cursor-pointer">{props.commentCount} Comments</div>
+          <div className="cursor-pointer">{props.comments} Comments</div>
         </div>
         <div className="mt-3 flex justify-between gap-2">
           <div className="flex gap-2">

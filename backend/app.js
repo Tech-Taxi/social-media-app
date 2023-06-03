@@ -36,7 +36,7 @@ app.use(helmet());
 
 // 2. Rate Limiting
 const limiter = rateLimit({
-  max: 100,
+  max: 200,
   window: 60 * 60 * 1000,
   message: 'Too many requests from this IP! Please try again in one hour.',
 });

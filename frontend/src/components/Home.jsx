@@ -22,7 +22,7 @@ function Home() {
           setUser(data.data.data)
         }
         catch(err){
-          console.log(err.response.data.message)
+          // console.log(err.response.data.message)
         }
       },
     []
@@ -37,8 +37,8 @@ function Home() {
           </div>
           <div className="flex mt-16">
             <div className="w-1/3"></div>
-            <div className="w-1/3">
-              <CreatePost />
+            <div className="w-1/2 px-5">
+              {user && <CreatePost />}
               <Feed />
             </div>
             <div className="w-1/3">
