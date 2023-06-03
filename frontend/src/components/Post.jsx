@@ -19,6 +19,10 @@ function Post(props) {
     if (user) setLiked(props.likes.includes(user.id));
   }, [user]);
 
+  useEffect(() => {
+    console.log(props.photo);
+  });
+
   const handleCommentBox = (e) => {
     setTypedComment(e.target.value);
   };
@@ -34,8 +38,8 @@ function Post(props) {
   };
 
   const truncatedCaption =
-    props.caption.length > 30
-      ? props.caption.substring(0, 30) + "... "
+    props.caption.length > 70
+      ? props.caption.substring(0, 70) + "... "
       : props.caption;
 
   const handleLike = () => {
@@ -45,7 +49,9 @@ function Post(props) {
         {},
         { withCredentials: true }
       )
-      .then((res) => setLiked(() => !isLiked))
+      .then((res) => {
+        setLiked(() => !isLiked);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -88,7 +94,7 @@ function Post(props) {
         <div className="mx-1 my-2">
           <p className="text-gray-700 text-left">
             {showFullCaption ? props.caption : truncatedCaption}
-            {props.caption.length > 30 && (
+            {props.caption.length > 70 && (
               <button
                 className="text-gray-800 hover:text-blue-700 font-medium ml-1"
                 onClick={handleToggleCaption}
@@ -98,16 +104,13 @@ function Post(props) {
             )}
           </p>
         </div>
-        {(props.photo !== "null") ? (
+        {props.photo && (
           <img
             src={`http://localhost:5000/img/posts/${props.photo}`}
-            alt="Post"
+            alt=""
             className="w-full object-cover"
           />
-        ) : (
-          <div></div>
         )}
-
         <div className="mt-3 flex justify-between gap-2">
           <div>{props.likes.length} Likes</div>
           <div className="cursor-pointer">{3} Comments</div>

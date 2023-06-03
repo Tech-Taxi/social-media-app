@@ -46,7 +46,7 @@ const CreatePost = () => {
         comment.current.value = "";
       }
     } catch (error) {
-      console.error(error);
+      alert(error.response.data.message);
     } finally {
       setLoading(false);
     }
