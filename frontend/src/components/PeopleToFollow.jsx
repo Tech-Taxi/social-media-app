@@ -13,6 +13,7 @@ const PeopleToFollow = () => {
   }
 
   useEffect(() => {
+    if(user)
     axios
       .get("http://localhost:5000/api/v1/users", { withCredentials: true })
       .then((response) => {

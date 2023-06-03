@@ -80,7 +80,7 @@ schema.pre(/^find/, function (next) {
       path: 'likes',
       select: 'post user',
     })
-    .populate({ path: 'comments', select: 'post' })
+    .populate({ path: 'comments' })
   next();
 });
 
