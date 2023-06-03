@@ -23,7 +23,7 @@ exports.getPosts = catchAsync(async (req, res, next) => {
     .paginate();
   let posts = await features.query;
   posts.map((post) => (post.likes = post.likes.map((like) => like.user)));
-  posts.select('-comments')
+  // posts.select('-comments')
   res.status(200).json({
     status: 'success',
     data: { posts },

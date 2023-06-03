@@ -28,7 +28,6 @@ function Feed() {
             <div className="w-6 h-6 bg-gray-600 rounded-full animate-bounce200"></div>
             <div className="w-6 h-6 bg-gray-600 rounded-full animate-bounce400"></div>
           </div>
-          {/* <div className="ml-2 text-gray-600">Loading...</div> */}
         </div>
       ) : (
         posts &&

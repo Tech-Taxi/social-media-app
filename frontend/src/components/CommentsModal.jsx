@@ -19,14 +19,13 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
       })
       .then((response) => {
         setPostDetails(response.data.data);
-        console.log(response.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  useEffect(() => console.log(postDetails.comments), [postDetails])
+  // useEffect(() => console.log(postDetails.comments), [postDetails])
 
   const handleLike = () => {
     axios
@@ -55,7 +54,6 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
           { withCredentials: true }
         )
         .then((response) => {
-          console.log(response.data);
           setTypedComment("");
         })
         .catch((error) => {
@@ -101,7 +99,6 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
               <div className="overflow-y-auto h-60">
                 {postDetails.commentCount>0 ?
                   postDetails.comments.map((comment, index) => {
-                    console.log(comment)
                     return (<div key={index} className="text-left flex flex-col mb-2">
                       <span className="font-semibold mr-2">
                         {comment.author}
