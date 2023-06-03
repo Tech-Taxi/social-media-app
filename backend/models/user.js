@@ -76,9 +76,9 @@ const schema = new mongoose.Schema(
       default: false,
       select: false,
     },
-    passwordChangedAt: Date,
-    passwordResetToken: String,
-    resetTokenExpiresIn: Date,
+    passwordChangedAt: { type: 'Date', select: false },
+    passwordResetToken: { type: 'String', select: false },
+    resetTokenExpiresIn: { type: 'Date', select: false },
   },
   {
     toJSON: { virtuals: true },
