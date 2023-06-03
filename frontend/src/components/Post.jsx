@@ -98,11 +98,16 @@ function Post(props) {
             )}
           </p>
         </div>
-        <img
-          src={`http://localhost:5000/img/posts/${props.photo}`}
-          alt="Post"
-          className="w-full object-cover"
-        />
+        {(props.photo !== "null") ? (
+          <img
+            src={`http://localhost:5000/img/posts/${props.photo}`}
+            alt="Post"
+            className="w-full object-cover"
+          />
+        ) : (
+          <div></div>
+        )}
+
         <div className="mt-3 flex justify-between gap-2">
           <div>{props.likes.length} Likes</div>
           <div className="cursor-pointer">{3} Comments</div>
@@ -125,15 +130,13 @@ function Post(props) {
               className="w-6 h-6 text-gray-700 cursor-pointer"
               onClick={openModal}
             />
-            {/* {showModal && (
+            {showModal && (
               <CommentsModal
-                photo={props.photo}
-                likes={likes}
-                comments={comments}
+                id={props.id}
                 isOpen={showModal}
                 onRequestClose={closeModal}
               />
-            )} */}
+            )}
           </div>
           <div className="flex gap-2">
             <input
