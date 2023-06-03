@@ -13,15 +13,16 @@ function Home() {
 
   useEffect(
     () =>
-      async function(){
-        try{
-          const data = await axios
-          .get(`http://localhost:5000/api/v1/users/me`, {
-            withCredentials: true,
-          })
-          setUser(data.data.data)
-        }
-        catch(err){
+      async function () {
+        try {
+          const data = await axios.get(
+            `http://localhost:5000/api/v1/users/me`,
+            {
+              withCredentials: true,
+            }
+          );
+          setUser(data.data.data);
+        } catch (err) {
           // console.log(err.response.data.message)
         }
       },
@@ -37,7 +38,7 @@ function Home() {
           </div>
           <div className="flex mt-16">
             <div className="w-1/3"></div>
-            <div className="w-1/2 px-5">
+            <div className="w-1/3">
               {user && <CreatePost />}
               <Feed />
             </div>

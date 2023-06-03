@@ -73,14 +73,25 @@ schema.virtual('commentCount').get(function () {
   return this.comments.length;
 });
 
-schema.pre(/^find/, function (next) {
+schema.pre(/^find$/, function (next) {
   this.find({ active: { $ne: false } });
   this.populate({ path: 'author', select: 'name photo' })
     .populate({
       path: 'likes',
       select: 'post user',
     })
-    .populate({ path: 'comments' })
+    .populate({ path: 'comments', select: 'post' })
+  next();
+});
+
+schema.pre(/^findOne$/, function (next) {
+  this.find({ active: { $ne: false } });
+  this.populate({ path: 'author', select: 'name photo' })
+    .populate({
+      path: 'likes',
+      select: 'post user',
+    })
+    .populate({ path: 'comments', select: 'content author post createdAt' })
   next();
 });
 

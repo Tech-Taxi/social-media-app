@@ -84,7 +84,7 @@ const CreatePost = () => {
           </div>
         )}
         <div className="flex justify-end mt-2 gap-2">
-          <label className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+          <label className="px-2 py-2 text-white bg-blue-500 rounded-full hover:bg-blue-600">
             <PhotographIcon className="w-6 h-6" />
             <input
               type="file"
@@ -94,7 +94,7 @@ const CreatePost = () => {
             />
           </label>
           <button
-            className="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600"
+            className="px-4 py-2 text-white bg-green-500 rounded-xl hover:bg-green-600"
             onClick={handlePost}
             disabled={loading}
           >

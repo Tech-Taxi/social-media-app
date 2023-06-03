@@ -22,18 +22,16 @@ exports.getPosts = catchAsync(async (req, res, next) => {
     .fields()
     .paginate();
   let posts = await features.query;
-  posts.map((post) => (post.likes = post.likes.map((like) => like.user)));
-  posts.select('-comments')
+  posts.map(post => post.likes=post.likes.map(like => like.user))
   res.status(200).json({
     status: 'success',
-    data: { posts },
+    data: {posts},
     count: posts.length,
   });
 });
 exports.getPost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.id)
-    .sort('-createdAt')
-    // .populate('comments');
+  // .populate('comments');
 
   if (!post) return next(new AppError('No post with that ID', 404));
 
