@@ -36,7 +36,7 @@ const Signup = () => {
   return (
     <div className="max-w-sm mx-auto">
       <h2 className="text-2xl font-bold mb-4">Signup</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-x-6">
         <div className="mb-4">
           <label className="block text-left">Name</label>
           <input
@@ -114,10 +114,10 @@ const Signup = () => {
           />
         </div>
         <button
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md col-span-2"
           type="submit"
         >
-          Signup
+          Sign Up
         </button>
       </form>
     </div>

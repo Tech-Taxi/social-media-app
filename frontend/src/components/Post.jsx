@@ -111,8 +111,8 @@ function Post(props) {
           <div>{props.likes.length} Likes</div>
           <div className="cursor-pointer">{props.comments} Comments</div>
         </div>
-        <div className="mt-3 flex justify-between gap-2">
-          <div className="flex gap-2">
+        <div className="mt-3 flex gap-5">
+          <div className="flex gap-2 flex-start items-center">
             {isLiked ? (
               <HeartSolid
                 className="w-6 h-6 text-red-700 cursor-pointer"
@@ -137,10 +137,10 @@ function Post(props) {
               />
             )}
           </div>
-          <div className="flex gap-2">
+          <div className="flex w-full items-center justify-between">
             <input
               type="text"
-              className="w-64 h-6 rounded-full px-2 my-0 py-0 border border-gray-300 focus:outline-none focus:border-blue-500"
+              className="w-64 h-6 rounded-full px-2 my-0 py-3 border border-gray-300 focus:outline-none focus:border-blue-500"
               placeholder="Enter text"
               value={typedComment}
               onChange={handleCommentBox}

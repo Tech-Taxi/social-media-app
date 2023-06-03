@@ -25,8 +25,6 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
       });
   }, []);
 
-  // useEffect(() => console.log(postDetails.comments), [postDetails])
-
   const handleLike = () => {
     axios
       .post(
@@ -35,7 +33,7 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
         { withCredentials: true }
       )
       .then((res) => setLiked(() => !isLiked))
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err.response.data.message));
   };
 
   const handleCommentBox = (e) => {
@@ -56,9 +54,7 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
         .then((response) => {
           setTypedComment("");
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((err) => {alert(err.response.data.message); setTypedComment("")});
     }
   };
 
@@ -97,15 +93,27 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
                 />
               </div>
               <div className="overflow-y-auto h-60">
-                {postDetails.commentCount>0 ?
+                {postDetails.commentCount > 0 ? (
                   postDetails.comments.map((comment, index) => {
-                    return (<div key={index} className="text-left flex flex-col mb-2">
-                      <span className="font-semibold mr-2">
-                        {comment.author}
-                      </span>
-                      <span className="ml-2">{comment.content}</span>
-                    </div>
-                  )}): <span className="fs-xl">This post has no comments 🥺</span>}
+                    return (
+                      <div key={index} className="flex mb-2 items-center">
+                        <img
+                          src={`http://localhost:5000/img/users/${comment.author.photo}`}
+                          alt="User Avatar"
+                          className="w-10 h-10 rounded-full mr-4"
+                        />
+                        <div className="flex flex-col text-left">
+                          <span className="font-semibold">
+                            {comment.author.name}
+                          </span>
+                          <span className="">{comment.content}</span>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <span className="fs-xl">This post has no comments 🥺</span>
+                )}
               </div>
 
               <div className="flex justify-between mr-2">
@@ -116,7 +124,7 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
                       onClick={handleLike}
                     />
                     <span className="font-semibold">
-                      {postDetails.likeCount}{" "}
+                      {postDetails.likeCount}
                     </span>
                   </div>
                 ) : (
@@ -135,16 +143,16 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
                 </div>
               </div>
 
-              <div className="flex mb-4">
+              <div className="flex mb-4 gap-2">
                 <input
                   type="text"
                   placeholder="Add a comment ..."
-                  className="flex-1 p-2 border border-gray-300 rounded-l"
+                  className="flex-1 p-2 border border-gray-300 rounded-full"
                   value={typedComment}
                   onChange={handleCommentBox}
                 />
                 <button
-                  className="bg-blue-500 text-white px-4 rounded-r"
+                  className="bg-blue-500 text-white px-4 rounded-full hover:bg-blue-600"
                   onClick={postComment}
                 >
                   Post

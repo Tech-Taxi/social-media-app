@@ -27,5 +27,10 @@ const schema = new mongoose.Schema(
   },
 );
 
+schema.pre(/^find/, function(next) {
+  this.populate({path: 'author', select: 'name photo'});
+  next();
+})
+
 const Comment = mongoose.model('Comment', schema);
 module.exports = Comment;
