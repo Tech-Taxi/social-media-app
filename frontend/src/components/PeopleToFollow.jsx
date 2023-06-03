@@ -8,26 +8,13 @@ const PeopleToFollow = () => {
   
   function difference(superset, subset) {
     const subsetIds = subset.map(item => item.to);
-    // const filteredArray = superset.filter((item) => !subsetIds.includes(item.id));
-    // console.log(filteredArray);
-    let filteredArray = [];
-    for(let item of superset){
-        if(!subsetIds.includes(item.id)){
-            filteredArray.push(item.id);
-        }
-    }
-    console.log(filteredArray);
-    return filteredArray;
+    return superset.filter((item) => !subsetIds.includes(item.id));
   }
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/v1/users", { withCredentials: true })
       .then((response) => {
-        console.log(user)
-        console.log((user.following));
-        console.log((response.data.data.docs));
-        console.log(difference(response.data.data.docs, user.following));
         setUsersToFollow(difference(response.data.data.docs, user.following));
       })
       .catch((error) => {
