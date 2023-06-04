@@ -8,11 +8,21 @@ const Signup = () => {
   const password = useRef();
   const confirmPassword = useRef();
   const dob = useRef();
-  const gender = useRef();
+  const maleRef = useRef();
+  const femaleRef = useRef();
+  const othersRef = useRef();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let selectedGender = '';
+    if (maleRef.current.checked) {
+      selectedGender = maleRef.current.value;
+    } else if (femaleRef.current.checked) {
+      selectedGender = femaleRef.current.value;
+    } else if (othersRef.current.checked) {
+      selectedGender = othersRef.current.value;
+    }
     axios
       .post("http://localhost:5000/api/v1/users/register", {
         name: name.current.value,
@@ -20,7 +30,7 @@ const Signup = () => {
         password: password.current.value,
         confirmPassword: confirmPassword.current.value,
         dob: dob.current.value,
-        gender: gender.current.value,
+        gender: selectedGender,
       })
       .then((response) => {
         if (response.data.status === "success") {
@@ -82,7 +92,7 @@ const Signup = () => {
           <input
             className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="radio"
-            ref={gender}
+            ref={maleRef}
             value={"Male"}
             name="gender"
           />
@@ -90,7 +100,7 @@ const Signup = () => {
           <input
             className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="radio"
-            ref={gender}
+            ref={femaleRef}
             value={"Female"}
             name="gender"
           />
@@ -98,7 +108,7 @@ const Signup = () => {
           <input
             className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500"
             type="radio"
-            ref={gender}
+            ref={othersRef}
             value={"Other"}
             name="gender"
           />

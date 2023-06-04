@@ -96,6 +96,11 @@ function Owndetails() {
             {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
           </div>
           <div className="flex items-start mt-2">
+            <span className="text-gray-500 mr-2">Gender:</span>
+            <span className="flex-1 text-left">{user.gender}</span>
+            {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
+          </div>
+          <div className="flex items-start mt-2">
             <span className="text-gray-500 mr-2">Age:</span>
             <span className="flex-1 text-left">{user.age}</span>
             {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
