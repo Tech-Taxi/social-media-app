@@ -19,7 +19,6 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
       })
       .then((response) => {
         setPostDetails(response.data.data);
-        console.log(response.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +52,6 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
           { withCredentials: true }
         )
         .then((response) => {
-          console.log(response.data);
           setTypedComment("");
         })
         .catch((err) => {alert(err.response.data.message); setTypedComment("")});
