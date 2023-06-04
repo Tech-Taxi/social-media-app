@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { HeartIcon as HeartOutline } from "@heroicons/react/outline";
 import { HeartIcon as HeartSolid, XIcon } from "@heroicons/react/solid";
 import axios from "axios";
+import { PostContext } from "../contexts/PostContext";
 
 function CommentsModal({ id, isOpen, onRequestClose }) {
   const [postDetails, setPostDetails] = useState(null);
   const [typedComment, setTypedComment] = useState("");
   const [isLiked, setLiked] = useState(false);
+
+  const {setPosts, posts} = useContext(PostContext)
 
   const closeModal = () => {
     onRequestClose();
@@ -24,20 +27,30 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
         console.log(error);
       });
   }, []);
+  
+  const handleCommentBox = (e) => {
+    setTypedComment(e.target.value);
+  };
 
   const handleLike = () => {
     axios
       .post(
-        `http://localhost:5000/api/v1/posts/${postDetails.id}/like`,
+        `http://localhost:5000/api/v1/posts/${id}/like`,
         {},
         { withCredentials: true }
       )
-      .then((res) => setLiked(() => !isLiked))
+      .then((response) => {
+        setLiked(() => !isLiked);
+        setPosts(() =>
+          posts.map((post) =>
+            post.id === response.data.data.post.id
+              ? response.data.data.post
+              : post
+          )
+        );
+        setPostDetails(response.data.data.post);
+      })
       .catch((err) => alert(err.response.data.message));
-  };
-
-  const handleCommentBox = (e) => {
-    setTypedComment(e.target.value);
   };
 
   const postComment = () => {
@@ -45,16 +58,26 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
     } else {
       axios
         .post(
-          `http://localhost:5000/api/v1/posts/${postDetails.id}/comment`,
+          `http://localhost:5000/api/v1/posts/${id}/comment`,
           {
             content: typedComment,
           },
           { withCredentials: true }
         )
         .then((response) => {
+          setPosts(() =>
+            posts.map((post) =>
+              post.id === response.data.data.post.id
+                ? response.data.data.post
+                : post
+            )
+          );
+          setPostDetails(response.data.data.post);
           setTypedComment("");
         })
-        .catch((err) => {alert(err.response.data.message); setTypedComment("")});
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
     }
   };
 

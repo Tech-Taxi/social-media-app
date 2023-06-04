@@ -5,9 +5,7 @@ import EditModal from "./EditModal";
 import { UserContext } from "../contexts/UserContext";
 
 function Owndetails() {
-  // const [user, setUserDetails] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const { user } = useContext(UserContext);
 
   const handleEditClick = () => {
@@ -17,21 +15,6 @@ function Owndetails() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:5000/api/v1/users/me", { withCredentials: true })
-  //     .then((response) => {
-  //       setUserDetails(response.data.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
-  // if (!user) {
-  //   return null;
-  // }
 
   return (
     user && (
@@ -63,7 +46,7 @@ function Owndetails() {
             <span className="text-gray-500 ml-1">Following</span>
           </div>
         </div>
-        <div className="mt-4 ml-10">
+        <div className="mt-4">
           <div className="flex items-start">
             <span className="text-gray-500 mr-2">Bio:</span>
             <span className="flex-1 text-left">{user.bio}</span>

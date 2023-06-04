@@ -7,14 +7,19 @@ import {
 import { HeartIcon as HeartSolid } from "@heroicons/react/solid";
 import axios from "axios";
 import CommentsModal from "./CommentsModal";
+
 import { UserContext } from "../contexts/UserContext";
+import { PostContext } from "../contexts/PostContext";
 
 function Post(props) {
   const [showModal, setShowModal] = useState(false);
   const [showFullCaption, setShowFullCaption] = useState(false);
   const [typedComment, setTypedComment] = useState("");
   const [isLiked, setLiked] = useState(false);
+
   const { user } = useContext(UserContext);
+  const { posts, setPosts } = useContext(PostContext);
+
   useEffect(() => {
     if (user) {
       if (props.likes) setLiked(props.likes.includes(user.id));
@@ -48,8 +53,15 @@ function Post(props) {
         {},
         { withCredentials: true }
       )
-      .then((res) => {
+      .then((response) => {
         setLiked(() => !isLiked);
+        setPosts(() =>
+          posts.map((post) =>
+            post.id === response.data.data.post.id
+              ? response.data.data.post
+              : post
+          )
+        );
       })
       .catch((err) => alert(err.response.data.message));
   };
@@ -67,7 +79,13 @@ function Post(props) {
         )
         .then((response) => {
           alert("You've commented successfully 🥳");
-          console.log(response.data);
+          setPosts(() =>
+            posts.map((post) =>
+              post.id === response.data.data.post.id
+                ? response.data.data.post
+                : post
+            )
+          );
           setTypedComment("");
         })
         .catch((err) => {

@@ -1,4 +1,5 @@
 const Like = require('../models/like');
+const Post = require('../models/post')
 const catchAsync = require('../utils/catchAsync');
 
 exports.createLike = catchAsync(async (req, res, next) => {
@@ -14,17 +15,19 @@ exports.createLike = catchAsync(async (req, res, next) => {
   if(existingLike){
     console.log(existingLike._id)
     await Like.deleteOne({_id: existingLike._id})
-    res.status(200).json({
+    const post = await Post.findById(req.body.post);
+    res.status(201).json({
       status: 'success',
-      message: 'Post disliked successfully'
+      data: {post},
     });
     return;
   }
 
-  const like = await Like.create(req.body);
+  await Like.create(req.body);
+  const post = await Post.findById(req.body.post);
   res.status(201).json({
     status: 'success',
-    data: like,
+    data: {post},
   });
 });
 

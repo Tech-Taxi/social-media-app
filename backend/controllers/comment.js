@@ -1,4 +1,5 @@
 const Comment = require('../models/comment');
+const Post = require('../models/post');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
@@ -6,10 +7,11 @@ exports.createComment = catchAsync(async (req, res, next) => {
   if (!req.body.author) req.body.author = req.user.id;
   if (!req.body.post) req.body.post = req.params.postId;
 
-  const comment = await Comment.create(req.body);
+  await Comment.create(req.body);
+  const post=await Post.findById(req.body.post);
   res.status(201).json({
     status: 'success',
-    data: comment,
+    data: {post},
   });
 });
 

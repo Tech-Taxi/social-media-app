@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Feed from "./Feed.jsx";
-import Navbar from "./Navbar.jsx";
-import CreatePost from "./CreatePost.jsx";
-import { UserContext } from "../contexts/UserContext.js";
-import Register from "./Register.jsx";
+import Feed from "./Feed";
+import Navbar from "./Navbar";
+import CreatePost from "./CreatePost";
+import { UserContext } from "../contexts/UserContext";
+import Register from "./Register";
 import axios from "axios";
-import Connections from "./Connections.jsx";
-import Owndetails from "./OwnDetails.jsx";
-import { PostContext } from "../contexts/PostContext.js";
+import Connections from "./Connections";
+import Owndetails from "./OwnDetails";
+import { PostContext } from "../contexts/PostContext";
 
 function Home() {
   const [user, setUser] = useState();
@@ -37,7 +37,7 @@ function Home() {
           );
           setUser(data.data.data);
         } catch (err) {
-          alert(err.response.data.message);
+          // alert(err.response.data.message);
         }
       },
     []
