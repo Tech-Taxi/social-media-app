@@ -114,7 +114,7 @@ const Signup = () => {
           />
         </div>
         <button
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md col-span-2 transition"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md col-span-2"
           type="submit"
         >
           Sign Up

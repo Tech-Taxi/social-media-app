@@ -18,7 +18,7 @@ function Owndetails() {
 
   return (
     user && (
-      <div className="relative flex flex-col items-center mx-16 my-4 px-0 py-4 bg-white rounded-lg shadow-xl">
+      <div className="relative flex flex-col items-center mx-16 my-4 px-5 py-4 bg-white rounded-lg shadow-xl">
         <div className="absolute top-0 right-0 mt-2 mr-2 z-10">
           <PencilIcon
             className="w-6 h-6 text-gray-500 cursor-pointer"

@@ -184,7 +184,7 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
                   onChange={handleCommentBox}
                 />
                 <button
-                  className="bg-blue-500 text-white px-4 rounded-full hover:bg-blue-600 transition capitalize"
+                  className="bg-blue-500 text-white px-4 rounded-full hover:bg-blue-600 capitalize"
                   onClick={postComment}
                 >
                   Post

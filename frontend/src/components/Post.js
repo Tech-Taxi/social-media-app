@@ -113,7 +113,7 @@ function Post(props) {
             {showFullCaption ? props.caption : truncatedCaption}
             {props.caption.length > 70 && (
               <button
-                className="text-gray-800 hover:text-blue-700 font-medium ml-1 transition"
+                className="text-gray-800 hover:text-blue-700 font-medium ml-1"
                 onClick={handleToggleCaption}
               >
                 {showFullCaption ? "Read less" : "Read more"}

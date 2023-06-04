@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
 import UserMenu from "./UserMenu";
@@ -29,12 +29,12 @@ const Navbar = () => {
   return (
     <div className="h-14 items-center flex bg-white">
       <div className="w-1/2 flex justify-start gap-5 mx-6 px-6">
-        <h1 className="text-2xl font-semibold text-blue-700">Social Media</h1>
+        <h1 className="text-2xl font-semibold text-blue-700"><Link to={'/'}>Social Media</Link></h1>
       </div>
       <div className="w-1/2 flex justify-end gap-5 mx-6 px-6">
         {!user ? (
           <button
-            className="bg-blue-500 text-white font-medium border-b-2 border-transparent py-1 px-3 rounded-full hover:bg-blue-600 transition"
+            className="bg-blue-500 text-white font-medium border-b-2 border-transparent py-1 px-3 rounded-full hover:bg-blue-600"
             onClick={() => handleLogin("register")}
           >
             Log In
