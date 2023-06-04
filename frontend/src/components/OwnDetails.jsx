@@ -47,7 +47,7 @@ function Owndetails() {
         </div>
       </div>
       <div className="mt-4">
-        <div className="flex items-center">
+        <div className="flex">
           <span className="text-gray-500 mr-2">Bio:</span>
           <span className="flex-1 text-left">{userDetails.bio}</span>
           <PencilIcon className="ml-2 w-4 h-4 text-gray-500 cursor-pointer" />

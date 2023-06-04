@@ -66,10 +66,12 @@ schema.virtual('likes', {
 });
 
 schema.virtual('likeCount').get(function () {
+  if(!this.likes) return 0;
   return this.likes.length;
 });
 
 schema.virtual('commentCount').get(function () {
+  if(!this.comments) return 0;
   return this.comments.length;
 });
 
@@ -80,7 +82,7 @@ schema.pre(/^find$/, function (next) {
       path: 'likes',
       select: 'post user',
     })
-    .populate({ path: 'comments', select: 'post' })
+    .populate({ path: 'comments', select: 'post' });
   next();
 });
 
@@ -91,7 +93,7 @@ schema.pre(/^findOne$/, function (next) {
       path: 'likes',
       select: 'post user',
     })
-    .populate({ path: 'comments', select: 'content author post createdAt' })
+    .populate({ path: 'comments', select: 'content author post createdAt' });
   next();
 });
 
