@@ -9,7 +9,6 @@ function Owndetails() {
     axios
       .get("http://localhost:5000/api/v1/users/me", { withCredentials: true })
       .then((response) => {
-        console.log(response);
         setUserDetails(response.data.data);
       })
       .catch((error) => {
@@ -23,6 +22,9 @@ function Owndetails() {
 
   return (
     <div className="flex flex-col items-center m-4 p-4 bg-white rounded-lg shadow-2xl">
+      <div className="relative flex top-0 right-0 mt-2 mr-2">
+        <PencilIcon className="justify-end w-5 h-5 text-gray-500 cursor-pointer" />
+      </div>
       <div className="relative group">
         <img
           src={`http://localhost:5000/img/users/${userDetails.photo}`}
@@ -53,7 +55,7 @@ function Owndetails() {
         <div className="flex items-center mt-2">
           <span className="text-gray-500 mr-2">Email:</span>
           <span className="flex-1 text-left">{userDetails.email}</span>
-          <PencilIcon className="ml-2 w-4 h-4 text-gray-500 cursor-pointer" />
+          {/* <PencilIcon className="ml-2 w-4 h-4 text-gray-500 cursor-pointer" /> */}
         </div>
         <div className="flex items-center mt-2">
           <span className="text-gray-500 mr-2">Age:</span>
