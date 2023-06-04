@@ -9,7 +9,6 @@ function Owndetails() {
     axios
       .get("http://localhost:5000/api/v1/users/me", { withCredentials: true })
       .then((response) => {
-        console.log(response);
         setUserDetails(response.data.data);
       })
       .catch((error) => {

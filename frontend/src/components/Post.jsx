@@ -16,8 +16,11 @@ function Post(props) {
   const [isLiked, setLiked] = useState(false);
   const { user } = useContext(UserContext);
   useEffect(() => {
-    if (user) setLiked(props.likes.includes(user.id));
-  }, [user])
+    if (user) {
+      if (props.likes) setLiked(props.likes.includes(user.id));
+      else setLiked(false);
+    }
+  }, [user]);
 
   const handleCommentBox = (e) => {
     setTypedComment(e.target.value);
@@ -68,7 +71,7 @@ function Post(props) {
           setTypedComment("");
         })
         .catch((err) => {
-          alert(err.response.data.message)
+          alert(err.response.data.message);
         });
     }
   };
@@ -100,7 +103,7 @@ function Post(props) {
             )}
           </p>
         </div>
-        {props.photo!=="null" && (
+        {props.photo !== "null" && (
           <img
             src={`http://localhost:5000/img/posts/${props.photo}`}
             alt=""
@@ -108,7 +111,7 @@ function Post(props) {
           />
         )}
         <div className="mt-3 flex justify-between gap-2">
-          <div>{props.likes.length} Likes</div>
+          <div>{props.likes ? props.likes.length : props.likeCount} Likes</div>
           <div className="cursor-pointer">{props.comments} Comments</div>
         </div>
         <div className="mt-3 flex gap-5">

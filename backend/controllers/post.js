@@ -44,7 +44,7 @@ exports.getPost = catchAsync(async (req, res, next) => {
 exports.createPost = catchAsync(async (req, res, next) => {
   if (!req.body.author) req.body.author = req.user.id;
   if (req.file) req.body.photo = req.file.filename;
-  const post = await Post.create(req.body);
+  const post = (await Post.create(req.body).populate({path: 'author', select: 'name photo'}));
   post.active = undefined;
 
   res.status(200).json({

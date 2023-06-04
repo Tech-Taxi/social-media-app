@@ -66,12 +66,12 @@ schema.virtual('likes', {
 });
 
 schema.virtual('likeCount').get(function () {
-  if(!this.likes) return 0;
+  if (!this.likes) return 0;
   return this.likes.length;
 });
 
 schema.virtual('commentCount').get(function () {
-  if(!this.comments) return 0;
+  if (!this.comments) return 0;
   return this.comments.length;
 });
 
@@ -96,6 +96,7 @@ schema.pre(/^findOne$/, function (next) {
     .populate({ path: 'comments', select: 'content author post createdAt' });
   next();
 });
+
 
 const Post = mongoose.model('Post', schema);
 module.exports = Post;

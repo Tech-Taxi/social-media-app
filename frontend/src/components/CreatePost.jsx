@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext } from "react";
 import { PhotographIcon, XIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
+import { PostContext } from "../contexts/PostContext";
 
 const CreatePost = () => {
   const { user } = useContext(UserContext);
@@ -9,6 +10,8 @@ const CreatePost = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [previewURL, setPreviewURL] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const {posts, setPosts} = useContext(PostContext)
 
   const handleChoosePhoto = (e) => {
     const file = e.target.files[0];
@@ -38,9 +41,11 @@ const CreatePost = () => {
         }
       );
 
-      console.log(response.data);
+      // console.log(posts);
       if (response.data.status === "success") {
         alert("Post created successfully 🎉");
+        setPosts(() => [response.data.data, ...posts])
+        // console.log([response.data.data, ...posts])
         setSelectedPhoto(null);
         setPreviewURL(null);
         comment.current.value = "";
@@ -51,7 +56,7 @@ const CreatePost = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="flex items-start space-x-4 p-4 bg-white rounded-lg shadow-2xl my-4">
       <div className="w-12 h-12 rounded-full bg-gray-200">
