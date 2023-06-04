@@ -111,7 +111,7 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
                   </p>
                 </>
               ) : (
-                <div className="h-full flex items-center">
+                <div className="h-full flex items-center justify-center">
                   <p className="text-xl">{postDetails.caption}</p>
                 </div>
               )}
@@ -184,7 +184,7 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
                   onChange={handleCommentBox}
                 />
                 <button
-                  className="bg-blue-500 text-white px-4 rounded-full hover:bg-blue-600"
+                  className="bg-blue-500 text-white px-4 rounded-full hover:bg-blue-600 transition capitalize"
                   onClick={postComment}
                 >
                   Post

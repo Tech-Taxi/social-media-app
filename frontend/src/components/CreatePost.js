@@ -81,7 +81,7 @@ const CreatePost = () => {
               alt="Selected"
             />
             <button
-              className="absolute top-2 right-2 bg-white rounded-full p-1 text-gray-500 hover:text-gray-700"
+              className="absolute top-2 right-2 bg-white rounded-full p-1 text-gray-500 hover:text-gray-700 transition"
               onClick={handleRemovePhoto}
             >
               <XIcon className="w-5 h-5" />
@@ -89,7 +89,7 @@ const CreatePost = () => {
           </div>
         )}
         <div className="flex justify-end mt-2 gap-2">
-          <label className="px-2 py-2 text-white bg-blue-500 rounded-full hover:bg-blue-600">
+          <label className="px-2 py-2 text-white bg-blue-500 rounded-full hover:bg-blue-600 transition">
             <PhotographIcon className="w-6 h-6" />
             <input
               type="file"
@@ -99,7 +99,7 @@ const CreatePost = () => {
             />
           </label>
           <button
-            className="px-4 py-2 text-white bg-green-500 rounded-xl hover:bg-green-600"
+            className="px-4 py-2 text-white bg-green-500 rounded-xl hover:bg-green-600 transition"
             onClick={handlePost}
             disabled={loading}
           >

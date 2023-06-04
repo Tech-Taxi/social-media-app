@@ -25,11 +25,11 @@ const Signup = () => {
       .then((response) => {
         if (response.data.status === "success") {
           alert("Registered Successfully 🥳");
-          setTimeout(() => navigate("/"), 1500);
+          setTimeout(() => navigate(0), 1500);
         }
       })
       .catch((error) => {
-        alert(error.reponse.data.message);
+        alert(error);
       });
   };
 
@@ -114,7 +114,7 @@ const Signup = () => {
           />
         </div>
         <button
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md col-span-2"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md col-span-2 transition"
           type="submit"
         >
           Sign Up

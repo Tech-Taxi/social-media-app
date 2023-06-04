@@ -34,7 +34,7 @@ const Navbar = () => {
       <div className="w-1/2 flex justify-end gap-5 mx-6 px-6">
         {!user ? (
           <button
-            className="bg-blue-500 text-white font-medium border-b-2 border-transparent py-1 px-3"
+            className="bg-blue-500 text-white font-medium border-b-2 border-transparent py-1 px-3 rounded-full hover:bg-blue-600 transition"
             onClick={() => handleLogin("register")}
           >
             Log In
