@@ -21,9 +21,9 @@ function Owndetails() {
   }
 
   return (
-    <div className="flex flex-col items-center m-4 p-4 bg-white rounded-lg shadow-2xl">
-      <div className="relative flex top-0 right-0 mt-2 mr-2">
-        <PencilIcon className="justify-end w-5 h-5 text-gray-500 cursor-pointer" />
+    <div className="relative flex flex-col items-center mx-16 my-4 px-0 py-4 bg-white rounded-lg shadow-xl">
+      <div className="absolute top-0 right-0 mt-2 mr-2 z-10">
+        <PencilIcon className="w-6 h-6 text-gray-500 cursor-pointer" />
       </div>
       <div className="relative group">
         <img
@@ -47,20 +47,20 @@ function Owndetails() {
         </div>
       </div>
       <div className="mt-4">
-        <div className="flex">
+        <div className="flex items-center">
           <span className="text-gray-500 mr-2">Bio:</span>
           <span className="flex-1 text-left">{userDetails.bio}</span>
-          <PencilIcon className="ml-2 w-4 h-4 text-gray-500 cursor-pointer" />
+          {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
         </div>
         <div className="flex items-center mt-2">
           <span className="text-gray-500 mr-2">Email:</span>
           <span className="flex-1 text-left">{userDetails.email}</span>
-          {/* <PencilIcon className="ml-2 w-4 h-4 text-gray-500 cursor-pointer" /> */}
+          {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
         </div>
         <div className="flex items-center mt-2">
           <span className="text-gray-500 mr-2">Age:</span>
           <span className="flex-1 text-left">{userDetails.age}</span>
-          {/* <PencilIcon className="ml-2 w-4 h-4 text-gray-500 cursor-pointer" /> */}
+          {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
         </div>
         <div className="flex items-center mt-2">
           <span className="text-gray-500 mr-2">Total Posts:</span>

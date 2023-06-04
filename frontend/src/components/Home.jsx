@@ -38,14 +38,14 @@ function Home() {
             <Navbar />
           </div>
           <div className="flex mt-16">
-            <div className="w-1/3 pr-3 fixed">
+            <div className="w-1/3">
               <Owndetails />
             </div>
-            <div className="w-1/3 relative left-1/3">
+            <div className="w-1/3">
               {user && <CreatePost />}
               <Feed />
             </div>
-            <div className="w-1/3 fixed left-2/3">
+            <div className="w-1/3">
               <Connections />
             </div>
           </div>
