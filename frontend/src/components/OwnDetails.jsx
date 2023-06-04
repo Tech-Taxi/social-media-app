@@ -46,23 +46,23 @@ function Owndetails() {
           <span className="text-gray-500 ml-1">Following</span>
         </div>
       </div>
-      <div className="mt-4">
-        <div className="flex items-center">
+      <div className="mt-4 ml-10">
+        <div className="flex items-start">
           <span className="text-gray-500 mr-2">Bio:</span>
           <span className="flex-1 text-left">{userDetails.bio}</span>
           {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
         </div>
-        <div className="flex items-center mt-2">
+        <div className="flex items-start mt-2">
           <span className="text-gray-500 mr-2">Email:</span>
           <span className="flex-1 text-left">{userDetails.email}</span>
           {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
         </div>
-        <div className="flex items-center mt-2">
+        <div className="flex items-start mt-2">
           <span className="text-gray-500 mr-2">Age:</span>
           <span className="flex-1 text-left">{userDetails.age}</span>
           {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
         </div>
-        <div className="flex items-center mt-2">
+        <div className="flex items-start mt-2">
           <span className="text-gray-500 mr-2">Total Posts:</span>
           <span className="flex-1 text-left">{userDetails.posts.length}</span>
         </div>
