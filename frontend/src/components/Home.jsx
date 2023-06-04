@@ -6,6 +6,7 @@ import { UserContext } from "../contexts/UserContext.js";
 import Register from "./Register.jsx";
 import axios from "axios";
 import Connections from "./Connections.jsx";
+import Owndetails from "./OwnDetails.jsx";
 
 function Home() {
   const [user, setUser] = useState();
@@ -37,7 +38,9 @@ function Home() {
             <Navbar />
           </div>
           <div className="flex mt-16">
-            <div className="w-1/3"></div>
+            <div className="w-1/3">
+              <Owndetails />
+            </div>
             <div className="w-1/3">
               {user && <CreatePost />}
               <Feed />
