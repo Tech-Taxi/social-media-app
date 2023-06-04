@@ -18,26 +18,54 @@ function Home() {
   useEffect(
     () =>
       async function () {
+        // try {
+        //   const res = await axios.get("http://localhost:5000/api/v1/posts", {
+        //     withCredentials: true,
+        //   });
+        //   setPosts(res.data.data.posts);
+        //   setLoading(false);
+        // } catch (err) {
+        //   alert(err.response.data.message);
+        //   setLoading(false);
+        // }
+        // try{
+        //   const data = await axios.get(
+        //     `http://localhost:5000/api/v1/users/me`,
+        //     {
+        //       withCredentials: true,
+        //     }
+        //   );
+        //   setUser(data.data.data);
+        // } catch (err) {
+        //   // alert(err.response.data.message);
+        // }
         try {
-          const res = await axios.get("http://localhost:5000/api/v1/posts", {
+          const res = axios.get("http://localhost:5000/api/v1/posts", {
             withCredentials: true,
           });
-          setPosts(res.data.data.posts);
+
+          const resPosts = await res;
+          setPosts(resPosts.data.data.posts);
           setLoading(false);
+
+          const data = axios.get(`http://localhost:5000/api/v1/users/me`, {
+            withCredentials: true,
+          });
+
+          const dataUser = await data;
+          setUser(dataUser.data.data);
+
+          // axios.get("http://localhost:5000/api/v1/posts", {
+          //   withCredentials: true,
+          // }).then(res => setPosts(res.data.data.posts));
+
+          // axios.get("http://localhost:5000/api/v1/users/me", {
+          //   withCredentials: true,
+          // }).then(res => setPosts(res.data.data.data));
+
+
         } catch (err) {
-          alert(err.response.data.message);
-          setLoading(false);
-        }
-        try{
-          const data = await axios.get(
-            `http://localhost:5000/api/v1/users/me`,
-            {
-              withCredentials: true,
-            }
-          );
-          setUser(data.data.data);
-        } catch (err) {
-          // alert(err.response.data.message);
+          console.log(err.response);
         }
       },
     []

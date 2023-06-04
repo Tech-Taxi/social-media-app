@@ -3,13 +3,15 @@ import { HeartIcon as HeartOutline } from "@heroicons/react/outline";
 import { HeartIcon as HeartSolid, XIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { PostContext } from "../contexts/PostContext";
+import { UserContext } from "../contexts/UserContext";
 
 function CommentsModal({ id, isOpen, onRequestClose }) {
   const [postDetails, setPostDetails] = useState(null);
   const [typedComment, setTypedComment] = useState("");
   const [isLiked, setLiked] = useState(false);
 
-  const {setPosts, posts} = useContext(PostContext)
+  const { setPosts, posts } = useContext(PostContext);
+  const { user } = useContext(UserContext);
 
   const closeModal = () => {
     onRequestClose();
@@ -27,7 +29,14 @@ function CommentsModal({ id, isOpen, onRequestClose }) {
         console.log(error);
       });
   }, []);
-  
+
+  useEffect(() => {
+    if (user && postDetails) {
+      if (postDetails.likes) setLiked(postDetails.likes.includes(user.id));
+      else setLiked(false);
+    }
+  }, [user, postDetails]);
+
   const handleCommentBox = (e) => {
     setTypedComment(e.target.value);
   };

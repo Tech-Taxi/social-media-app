@@ -25,10 +25,13 @@ exports.getPosts = catchAsync(async (req, res, next) => {
 });
 
 exports.getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findById(req.params.id);
+  let post = await Post.findById(req.params.id);
   // .populate('comments');
 
   if (!post) return next(new AppError('No post with that ID', 404));
+  post.likes = post.likes.map((like) => like.user)
+  
+  console.log(post)
 
   res.status(200).json({
     status: 'success',
