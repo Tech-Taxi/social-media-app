@@ -7,14 +7,6 @@ const APIFeatures = require('../utils/apiFeatures');
 const { deleteOne, getAll } = require('./factory');
 
 exports.getPosts = catchAsync(async (req, res, next) => {
-  // let posts = await Post.find({});
-  // posts.map(post => post.likes=post.likes.map(like => like.user))
-  // res.status(200).json({
-  //   status: 'success',
-  //   data: { posts },
-  //   count: posts.length,
-  // });
-
   req.query.sort = '-createdAt';
   const features = new APIFeatures(Post.find(), req.query)
     .filter()
@@ -22,15 +14,18 @@ exports.getPosts = catchAsync(async (req, res, next) => {
     .fields()
     .paginate();
   let posts = await features.query;
-  posts.map(post => post.likes=post.likes.map(like => like.user))
+
+  posts.map((post) => (post.likes = post.likes.map((like) => like.user)));
+
   res.status(200).json({
     status: 'success',
-    data: {posts},
+    data: { posts },
     count: posts.length,
   });
 });
+
 exports.getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findById(req.params.id)
+  const post = await Post.findById(req.params.id);
   // .populate('comments');
 
   if (!post) return next(new AppError('No post with that ID', 404));
@@ -44,8 +39,10 @@ exports.getPost = catchAsync(async (req, res, next) => {
 exports.createPost = catchAsync(async (req, res, next) => {
   if (!req.body.author) req.body.author = req.user.id;
   if (req.file) req.body.photo = req.file.filename;
-  const post = (await Post.create(req.body).populate({path: 'author', select: 'name photo'}));
+  let post = await Post.create(req.body);
   post.active = undefined;
+
+  post = await Post.findById(post._id);
 
   res.status(200).json({
     status: 'success',

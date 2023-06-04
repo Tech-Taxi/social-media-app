@@ -22,23 +22,31 @@ function Home() {
           const res = await axios.get("http://localhost:5000/api/v1/posts", {
             withCredentials: true,
           });
-          setPosts(res.data.data.posts);
-          setLoading(false);
-        } catch (err) {
-          alert(err.response.data.message);
-          setLoading(false);
-        }
-        try {
           const data = await axios.get(
             `http://localhost:5000/api/v1/users/me`,
             {
               withCredentials: true,
             }
           );
+          setPosts(res.data.data.posts);
           setUser(data.data.data);
+
+          setLoading(false);
         } catch (err) {
-          // console.log(err.response.data.message)
+          alert(err.response.data.message);
+          setLoading(false);
         }
+        // try {
+        //   const data = await axios.get(
+        //     `http://localhost:5000/api/v1/users/me`,
+        //     {
+        //       withCredentials: true,
+        //     }
+        //   );
+        //   setUser(data.data.data);
+        // } catch (err) {
+        //   // console.log(err.response.data.message)
+        // }
       },
     []
   );

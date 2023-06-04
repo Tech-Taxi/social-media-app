@@ -15,16 +15,16 @@ function Owndetails() {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/v1/users/me", { withCredentials: true })
-      .then((response) => {
-        setUserDetails(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:5000/api/v1/users/me", { withCredentials: true })
+  //     .then((response) => {
+  //       setUserDetails(response.data.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   if (!userDetails) {
     return null;
