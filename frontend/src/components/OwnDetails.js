@@ -6,11 +6,46 @@ import { UserContext } from "../contexts/UserContext";
 
 function Owndetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const handleEditClick = () => {
     setIsModalOpen(true);
   };
+
+  const handleChangePhoto = () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    fileInput.onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append("photo", file);
+        const shouldUpdate = window.confirm(
+          "Are you sure you want to change your profile photo?"
+        );
+  
+        if (shouldUpdate) {
+          axios
+            .patch("http://localhost:5000/api/v1/users/updateMe", formData, {
+              withCredentials: true,
+            })
+            .then((response) => {
+              setUser((user) => ({
+                ...user,
+                photo: response.data.data.photo,
+              }));
+            })
+            .catch((error) => {
+              console.error("Error updating profile image:", error);
+            });
+        }
+      }
+    };
+    fileInput.click();
+  };
+  
+  
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -32,7 +67,10 @@ function Owndetails() {
             className="w-24 h-24 rounded-full object-cover cursor-pointer"
           />
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <CameraIcon className="w-6 h-6 text-white bg-blue-500 rounded-full p-1" />
+            <CameraIcon 
+              className="w-6 h-6 text-white bg-blue-500 rounded-full p-1" 
+              onClick={handleChangePhoto}
+            />
           </div>
         </div>
         <h2 className="text-xl font-semibold mt-4">{user.name}</h2>
@@ -58,6 +96,11 @@ function Owndetails() {
             {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
           </div>
           <div className="flex items-start mt-2">
+            <span className="text-gray-500 mr-2">Gender:</span>
+            <span className="flex-1 text-left">{user.gender}</span>
+            {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
+          </div>
+          <div className="flex items-start mt-2">
             <span className="text-gray-500 mr-2">Age:</span>
             <span className="flex-1 text-left">{user.age}</span>
             {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
@@ -67,7 +110,7 @@ function Owndetails() {
             <span className="flex-1 text-left">{user.posts.length}</span>
           </div>
         </div>
-        {isModalOpen && <EditModal user={user} onClose={handleCloseModal} />}
+        {isModalOpen && <EditModal user={user} setUser={setUser} onClose={handleCloseModal} />}
       </div>
     )
   );
