@@ -63,6 +63,19 @@ function User() {
     setIsModalOpen(false);
   };
 
+  const handledeletePost = (id)=>{
+    console.log(id)
+    axios.delete(`http://localhost:5000/api/v1/posts/${id}`, { withCredentials: true })
+    .then((response) => {
+        console.log("User deleted successfully");
+        console.log(response);
+    })
+    .catch((error) => {
+        console.error("Error deleting user:", error);
+    });
+
+  };
+
   return (
     user && (
       <div className="">
@@ -143,7 +156,7 @@ function User() {
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 bg-black bg-opacity-50 hover:opacity-100">
                   <div className="flex items-center space-x-2">
                     <PencilIcon className="w-6 h-6 text-gray-100 cursor-pointer" />
-                    <TrashIcon className="w-6 h-6 text-gray-100 cursor-pointer"/>
+                    <TrashIcon className="w-6 h-6 text-gray-100 cursor-pointer" onClick={()=>{handledeletePost(post.id)}}/>
                   </div>
                 </div>
               </div>
