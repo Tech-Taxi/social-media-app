@@ -5,7 +5,6 @@ const {protect} = require('../controllers/auth')
 
 const router = express.Router({mergeParams: true});
 
-// /api/v1/users/:userId/follow
 
 router.use(protect)
 

@@ -2,7 +2,6 @@ const passport = require('passport');
 const User = require('../models/user');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-// const fun = catchAsync();
 
 passport.use(
   new GoogleStrategy(
@@ -12,7 +11,6 @@ passport.use(
       callbackURL: 'http://localhost:5000/api/v1/users/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
-      // console.log(profile);
       try {
         const user = await User.findOne({ email: profile.emails[0].value });
         if (!user) {

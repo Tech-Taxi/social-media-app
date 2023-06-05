@@ -8,7 +8,7 @@ const {
   getLikes,
   
 } = require('../controllers/like');
-const { protect, restrictTo } = require('../controllers/auth');
+const { protect } = require('../controllers/auth');
 
 router.route('/').get(getLikes);
 
