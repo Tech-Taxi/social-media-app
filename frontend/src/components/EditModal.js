@@ -39,7 +39,7 @@ function EditModal({ user, setUser, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
       <div className="bg-white w-full max-w-md mx-auto rounded-lg overflow-hidden transform transition-transform ease-in-out duration-300 -translate-x-full md:-translate-x-1/2">
         <div className="p-4 bg-blue-500 text-white">
           <h2 className="text-xl font-semibold">Edit Profile</h2>
