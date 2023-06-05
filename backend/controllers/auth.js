@@ -47,7 +47,12 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password)
     return next(new AppError('Email and Password required', 400));
 
-  const user = await User.findOne({ email }).populate('followers').populate('following').populate('posts').populate('likes').select('+password');
+  const user = await User.findOne({ email })
+    .populate('followers')
+    .populate('following')
+    .populate('posts')
+    .populate('likes')
+    .select('+password');
   if (!user || !(await user.correctPassword(password, user.password)))
     return next(new AppError('Incorrect email or password entered', 401));
 
@@ -76,7 +81,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   //   req.headers.authorization.startsWith('Bearer')
   // )
   //   token = req.headers.authorization.split(' ')[1];
-  // else 
+  // else
   if (req.cookies.jwt) token = req.cookies.jwt;
   // console.log(req.cookies);
   // console.log('token', token);
@@ -173,7 +178,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   try {
     await new Email(user, resetURL).sendReset();
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       message: 'Password reset token sent to email',
     });
@@ -191,10 +196,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     );
   }
 
-  res.status(200).json({
-    status: 'success',
-    message: 'Token sent to mail',
-  });
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
