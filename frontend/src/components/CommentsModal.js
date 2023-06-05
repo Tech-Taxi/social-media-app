@@ -94,8 +94,8 @@ function CommentsModal({ id, onRequestClose }) {
     return null;
   } else {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-        <div className="bg-white w-full max-w-2xl mx-auto rounded-lg overflow-hidden">
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 dark:bg-slate-900 dark:bg-opacity-50">
+        <div className="bg-white w-full max-w-2xl mx-auto rounded-lg overflow-hidden dark:bg-slate-700">
           <div className="grid grid-cols-2">
             <div className="p-4 h-full">
               {postDetails.photo !== "null" ? (
@@ -152,7 +152,7 @@ function CommentsModal({ id, onRequestClose }) {
                 {isLiked ? (
                   <div className="flex items-center mb-4">
                     <HeartSolid
-                      className="w-6 h-6 mr-1 text-red-700 cursor-pointer"
+                      className="w-6 h-6 mr-1 text-red-700 cursor-pointer dark:text-gray-100"
                       onClick={handleLike}
                     />
                     <span className="font-semibold">
@@ -162,7 +162,7 @@ function CommentsModal({ id, onRequestClose }) {
                 ) : (
                   <div className="flex items-center mb-4">
                     <HeartOutline
-                      className="w-6 h-6 mr-1 text-gray-700 cursor-pointer"
+                      className="w-6 h-6 mr-1 text-gray-700 cursor-pointer dark:text-gray-100"
                       onClick={handleLike}
                     />
                     <span className="font-semibold">

@@ -50,7 +50,7 @@ const Signup = () => {
         <div className="mb-4">
           <label className="block text-left">Name</label>
           <input
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
             type="text"
             placeholder="Name"
             ref={name}
@@ -60,7 +60,7 @@ const Signup = () => {
         <div className="mb-4">
           <label className="block text-left">Email</label>
           <input
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
             type="email"
             placeholder="Email"
             ref={email}
@@ -70,7 +70,7 @@ const Signup = () => {
         <div className="mb-4">
           <label className="block text-left">Password</label>
           <input
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
             type="password"
             placeholder="Password"
             ref={password}
@@ -80,7 +80,7 @@ const Signup = () => {
         <div className="mb-4">
           <label className="block text-left">Confirm Password</label>
           <input
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
             type="password"
             placeholder="Confirm Password"
             ref={confirmPassword}
@@ -90,7 +90,7 @@ const Signup = () => {
         <div className="mb-4">
           <label className="block text-left">Gender</label>
           <input
-            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
             type="radio"
             ref={maleRef}
             value={"Male"}
@@ -98,7 +98,7 @@ const Signup = () => {
           />
           <span className="mr-3">Male</span>
           <input
-            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
             type="radio"
             ref={femaleRef}
             value={"Female"}
@@ -106,7 +106,7 @@ const Signup = () => {
           />
           <span className="mr-3">Female</span>
           <input
-            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
             type="radio"
             ref={othersRef}
             value={"Other"}
@@ -117,7 +117,7 @@ const Signup = () => {
         <div className="mb-4">
           <label className="block text-left">Birthday</label>
           <input
-            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500"
+            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
             type="date"
             ref={dob}
             required

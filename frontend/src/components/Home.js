@@ -41,15 +41,15 @@ function Home() {
     []
   );
   return (
-    <div className="mx-4 my-2">
+    <div className="my-2">
       <PostContext.Provider value={{ posts, setPosts, loading }}>
         <UserContext.Provider value={{ user, setUser, d, toggleD }}>
           {d && <Register />}
           <>
-            {!loading && <div className="w-full fixed top-0 z-50 border-b-2 border-blue-400">
+            {!loading && <div className="w-full fixed top-0 left-0 border-b-2 border-blue-400">
               <Navbar />
             </div>}
-            <div className="flex mt-16">
+            <div className="flex mt-14 dark:bg-slate-700">
               <div className="w-1/3">
                 <Owndetails />
               </div>

@@ -42,7 +42,7 @@ const PeopleToFollow = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center dark:text-gray-100">
       {user && (
         <>
           <h2 className="text-xl font-semibold mb-4">People to Follow</h2>

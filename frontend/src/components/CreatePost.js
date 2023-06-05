@@ -56,7 +56,7 @@ const CreatePost = () => {
   };
   
   return (
-    <div className="flex items-start space-x-4 p-4 bg-white rounded-lg shadow-2xl my-4">
+    <div className="flex items-start space-x-4 p-4 bg-white rounded-lg shadow-2xl my-4 dark:bg-slate-800">
       <div className="w-12 h-12 rounded-full bg-gray-200">
         <img
           className="rounded-full"
@@ -66,7 +66,7 @@ const CreatePost = () => {
       </div>
       <div className="flex-1">
         <textarea
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 resize-none overflow-y-hidden"
+          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 resize-none overflow-y-hidden dark:bg-slate-800 dark:text-gray-100"
           style={{ wordWrap: "break-word" }}
           placeholder="Write a comment..."
           ref={comment}

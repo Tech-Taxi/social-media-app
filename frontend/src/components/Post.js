@@ -96,7 +96,7 @@ function Post(props) {
   };
 
   return (
-    <div className="bg-white shadow-2xl overflow-hidden rounded-xl mb-4">
+    <div className="bg-white shadow-2xl overflow-hidden rounded-xl mb-4 dark:bg-slate-800 dark:text-white mt-4">
       <div className="p-3">
         <div className="flex items-center">
           <img
@@ -105,12 +105,12 @@ function Post(props) {
             className="w-10 h-10 rounded-full mr-4"
           />
           <div>
-            <p className="font-semibold text-gray-800">{props.author}</p>
-            <p className="text-xs text-gray-500 text-left">{props.age}</p>
+            <p className="font-semibold text-gray-800 dark:text-gray-200">{props.author}</p>
+            <p className="text-xs text-gray-500 text-left dark:text-gray-300">{props.age}</p>
           </div>
         </div>
         <div className="mx-1 my-2">
-          <p className="text-gray-700 text-left">
+          <p className="text-gray-700 text-left dark:text-gray-100">
             {showFullCaption ? props.caption : truncatedCaption}
             {props.caption.length > 70 && (
               <button
@@ -137,18 +137,18 @@ function Post(props) {
           <div className="flex gap-2 flex-start items-center">
             {isLiked ? (
               <HeartSolid
-                className="w-6 h-6 text-red-700 cursor-pointer"
+                className="w-6 h-6 text-red-700 cursor-pointer dark:text-gray-100"
                 onClick={handleLike}
               />
             ) : (
               <HeartOutline
-                className="w-6 h-6 text-gray-700 cursor-pointer"
+                className="w-6 h-6 text-gray-700 cursor-pointer dark:text-gray-100"
                 onClick={handleLike}
               />
             )}
 
             <ChatIcon
-              className="w-6 h-6 text-gray-700 cursor-pointer"
+              className="w-6 h-6 text-gray-700 cursor-pointer dark:text-gray-100"
               onClick={openModal}
             />
             {showModal && (
@@ -168,7 +168,7 @@ function Post(props) {
               onChange={handleCommentBox}
             />
             <ArrowSmRightIcon
-              className="w-6 h-6 text-gray-700 cursor-pointer"
+              className="w-6 h-6 text-gray-700 cursor-pointer dark:text-gray-100"
               onClick={postComment}
             />
           </div>

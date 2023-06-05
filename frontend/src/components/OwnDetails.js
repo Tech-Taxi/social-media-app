@@ -51,10 +51,10 @@ function Owndetails() {
 
   return (
     user && (
-      <div className="relative flex flex-col items-center mx-16 my-4 px-5 py-4 bg-white rounded-lg shadow-xl">
-        <div className="absolute top-0 right-0 mt-2 mr-2 z-10">
+      <div className="relative flex flex-col items-center mx-16 my-4 px-5 py-4 bg-white rounded-lg shadow-xl z-1 dark:bg-slate-800 dark:text-white">
+        <div className="absolute top-0 right-0 mt-2 mr-2 z-1">
           <PencilIcon
-            className="w-6 h-6 text-gray-500 cursor-pointer"
+            className="w-6 h-6 text-gray-500 cursor-pointer dark:text-gray-300"
             onClick={handleEditClick}
           />
         </div>
@@ -75,32 +75,32 @@ function Owndetails() {
         <div className="flex mt-2">
           <div className="flex items-center mr-4">
             <span className="font-semibold">{user.followers.length}</span>
-            <span className="text-gray-500 ml-1">Followers</span>
+            <span className="text-gray-500 ml-1 dark:text-gray-300">Followers</span>
           </div>
           <div className="flex items-center">
             <span className="font-semibold">{user.following.length}</span>
-            <span className="text-gray-500 ml-1">Following</span>
+            <span className="text-gray-500 ml-1  dark:text-gray-300">Following</span>
           </div>
         </div>
         <div className="mt-4">
           <div className="flex items-start">
-            <span className="text-gray-500 mr-2">Bio:</span>
+            <span className="text-gray-500 mr-2 dark:text-gray-300">Bio:</span>
             <span className="flex-1 text-left">{user.bio}</span>
           </div>
           <div className="flex items-start mt-2">
-            <span className="text-gray-500 mr-2">Email:</span>
+            <span className="text-gray-500 mr-2 dark:text-gray-300">Email:</span>
             <span className="flex-1 text-left">{user.email}</span>
           </div>
           <div className="flex items-start mt-2">
-            <span className="text-gray-500 mr-2">Gender:</span>
+            <span className="text-gray-500 mr-2 dark:text-gray-300">Gender:</span>
             <span className="flex-1 text-left">{user.gender}</span>
           </div>
           <div className="flex items-start mt-2">
-            <span className="text-gray-500 mr-2">Age:</span>
+            <span className="text-gray-500 mr-2 dark:text-gray-300">Age:</span>
             <span className="flex-1 text-left">{user.age}</span>
           </div>
           <div className="flex items-start mt-2">
-            <span className="text-gray-500 mr-2">Total Posts:</span>
+            <span className="text-gray-500 mr-2 dark:text-gray-300">Total Posts:</span>
             <span className="flex-1 text-left">{user.posts.length}</span>
           </div>
         </div>
