@@ -1,7 +1,6 @@
 import React, {  useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
-// import { useLocation } from 'react-router-dom';
 
 const LoginPage = () => {
   const [activeComponent, setActiveComponent] = useState('login');
@@ -30,7 +29,7 @@ const LoginPage = () => {
           Signup
         </button>
       </div>
-      <div className="bg-white rounded-lg shadow-md w-96 p-6 mt-6">
+      <div className="bg-white rounded-lg shadow-md p-6 mt-6 w-96">
         {activeComponent === 'login' ? <Login /> : <Signup />}
       </div>
     </div>

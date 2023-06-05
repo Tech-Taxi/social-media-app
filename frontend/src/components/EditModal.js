@@ -22,7 +22,6 @@ function EditModal({ user, setUser, onClose }) {
         withCredentials: true,
       })
       .then((response) => {
-        // console.log("User details updated successfully:", response.data);
         setUser((user) => ({
           ...user,
           name: response.data.data.name,
@@ -47,18 +46,18 @@ function EditModal({ user, setUser, onClose }) {
         <div className="p-4">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-                <label htmlFor="name" className="block mb-1 font-medium">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="w-full p-2 border border-gray-300 rounded"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </div>
+              <label htmlFor="name" className="block mb-1 font-medium">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                className="w-full p-2 border border-gray-300 rounded"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
             <div className="mb-4">
               <label htmlFor="bio" className="block mb-1 font-medium">
                 Bio

@@ -6,7 +6,6 @@ exports.createLike = catchAsync(async (req, res, next) => {
   if (!req.body.user) req.body.user = req.user.id;
   if (!req.body.post) req.body.post = req.params.postId;
 
-  // console.log(req.body)
   const existingLike = await Like.findOne({
     user: req.body.user,
     post: req.body.post,

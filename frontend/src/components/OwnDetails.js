@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { PencilIcon, CameraIcon } from "@heroicons/react/outline";
 import EditModal from "./EditModal";
@@ -24,7 +24,7 @@ function Owndetails() {
         const shouldUpdate = window.confirm(
           "Are you sure you want to change your profile photo?"
         );
-  
+
         if (shouldUpdate) {
           axios
             .patch("http://localhost:5000/api/v1/users/updateMe", formData, {
@@ -44,8 +44,6 @@ function Owndetails() {
     };
     fileInput.click();
   };
-  
-  
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -67,8 +65,8 @@ function Owndetails() {
             className="w-24 h-24 rounded-full object-cover cursor-pointer"
           />
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <CameraIcon 
-              className="w-6 h-6 text-white bg-blue-500 rounded-full p-1" 
+            <CameraIcon
+              className="w-6 h-6 text-white bg-blue-500 rounded-full p-1"
               onClick={handleChangePhoto}
             />
           </div>
@@ -88,29 +86,27 @@ function Owndetails() {
           <div className="flex items-start">
             <span className="text-gray-500 mr-2">Bio:</span>
             <span className="flex-1 text-left">{user.bio}</span>
-            {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
           </div>
           <div className="flex items-start mt-2">
             <span className="text-gray-500 mr-2">Email:</span>
             <span className="flex-1 text-left">{user.email}</span>
-            {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
           </div>
           <div className="flex items-start mt-2">
             <span className="text-gray-500 mr-2">Gender:</span>
             <span className="flex-1 text-left">{user.gender}</span>
-            {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
           </div>
           <div className="flex items-start mt-2">
             <span className="text-gray-500 mr-2">Age:</span>
             <span className="flex-1 text-left">{user.age}</span>
-            {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
           </div>
           <div className="flex items-start mt-2">
             <span className="text-gray-500 mr-2">Total Posts:</span>
             <span className="flex-1 text-left">{user.posts.length}</span>
           </div>
         </div>
-        {isModalOpen && <EditModal user={user} setUser={setUser} onClose={handleCloseModal} />}
+        {isModalOpen && (
+          <EditModal user={user} setUser={setUser} onClose={handleCloseModal} />
+        )}
       </div>
     )
   );

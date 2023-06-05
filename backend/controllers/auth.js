@@ -36,7 +36,6 @@ exports.register = catchAsync(async (req, res, next) => {
   const user = await User.create(req.body);
 
   const url = `${req.protocol}://${req.get('host')}/api/v1/users/me`;
-  // console.log(url);
   await new Email(user, url).sendWelcome();
 
   sendToken(user, 201, res);
@@ -47,14 +46,18 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password)
     return next(new AppError('Email and Password required', 400));
 
-  const user = await User.findOne({ email }).populate('followers').populate('following').populate('posts').populate('likes').select('+password');
+  const user = await User.findOne({ email })
+    .populate('followers')
+    .populate('following')
+    .populate('posts')
+    .populate('likes')
+    .select('+password');
   if (!user || !(await user.correctPassword(password, user.password)))
     return next(new AppError('Incorrect email or password entered', 401));
 
   if (user.googleLogin)
     return next(new AppError('You registered using a Google account', 401));
 
-  // const token = signToken(user._id);
   sendToken(user, 200, res);
 });
 
@@ -70,31 +73,16 @@ exports.logout = (req, res) => {
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
 
-  // 1. Check if token exists
-  // if (
-  //   req.headers.authorization &&
-  //   req.headers.authorization.startsWith('Bearer')
-  // )
-  //   token = req.headers.authorization.split(' ')[1];
-  // else 
   if (req.cookies.jwt) token = req.cookies.jwt;
-  // console.log(req.cookies);
-  // console.log('token', token);
 
   if (!token)
     return next(
       new AppError('You are not logged in. Please log in to continue', 401),
     );
 
-  // 2. Verify token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_KEY);
-  // console.log(decoded);
-
-  // 3. Check if the user exists
   const user = await User.findById(decoded.id);
   if (!user) return next(new AppError('User no longer exists', 401));
-
-  // 4. Check if user has changed password
   if (user.changedPasswordAfter(decoded.iat))
     return next(
       new AppError('User has changed password. Please log in again.', 401),
@@ -108,7 +96,6 @@ exports.isLoggedIn = async (req, res, next) => {
   try {
     let token;
 
-    // 1. Check if token exists
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith('Bearer')
@@ -121,16 +108,13 @@ exports.isLoggedIn = async (req, res, next) => {
         .status(200)
         .json({ status: 'fail', message: 'User is not logged in' });
 
-    // 2. Verify token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_KEY);
 
-    // 3. Check if the user exists
     const user = await User.findById(decoded.id);
     if (!user)
       return res
         .status(200)
         .json({ status: 'fail', message: 'User is not logged in' });
-    // 4. Check if user has changed password
     if (user.changedPasswordAfter(decoded.iat))
       return res
         .status(200)
@@ -173,7 +157,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   try {
     await new Email(user, resetURL).sendReset();
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       message: 'Password reset token sent to email',
     });
@@ -191,10 +175,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     );
   }
 
-  res.status(200).json({
-    status: 'success',
-    message: 'Token sent to mail',
-  });
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
@@ -216,14 +196,11 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.resetTokenExpiresIn = undefined;
   await user.save();
 
-  // const token = signToken(user._id);
   sendToken(user, 200, res);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('+password');
-  // if(!user) return next(new AppError('No user exists. Please log in again.', 401));
-  // console.log(user);
   if (!user.correctPassword(req.body.password, user.password))
     next(new AppError('Incorrect password entered', 401));
 

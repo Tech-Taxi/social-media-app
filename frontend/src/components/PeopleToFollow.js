@@ -7,22 +7,22 @@ const PeopleToFollow = () => {
   const { user } = useContext(UserContext);
 
   function difference(superset, subset) {
-    subset.push({to:user.id});
-    if(subset.length<=0 || subset.length>=superset.length) return superset;
+    subset.push({ to: user.id });
+    if (subset.length <= 0 || subset.length >= superset.length) return superset;
     const subsetIds = subset.map((item) => item.to);
     return superset.filter((item) => !subsetIds.includes(item.id));
   }
 
   useEffect(() => {
-    if(user)
-    axios
-      .get("http://localhost:5000/api/v1/users", { withCredentials: true })
-      .then((response) => {
-        setUsersToFollow(difference(response.data.data.docs, user.following));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (user)
+      axios
+        .get("http://localhost:5000/api/v1/users", { withCredentials: true })
+        .then((response) => {
+          setUsersToFollow(difference(response.data.data.docs, user.following));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }, [user]);
 
   const handleFollowUser = async (userId) => {

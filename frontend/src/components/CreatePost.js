@@ -41,11 +41,9 @@ const CreatePost = () => {
         }
       );
 
-      // console.log(posts);
       if (response.data.status === "success") {
         alert("Post created successfully 🎉");
         setPosts(() => [response.data.data, ...posts])
-        // console.log([response.data.data, ...posts])
         setSelectedPhoto(null);
         setPreviewURL(null);
         comment.current.value = "";
