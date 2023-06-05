@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useContext } from "react";
 import Post from "./Post";
 import { PostContext } from "../contexts/PostContext";

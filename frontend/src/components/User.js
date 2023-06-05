@@ -67,8 +67,10 @@ function User() {
     console.log(id)
     axios.delete(`http://localhost:5000/api/v1/posts/${id}`, { withCredentials: true })
     .then((response) => {
-        console.log("User deleted successfully");
-        console.log(response);
+        let freshUser = {...user};
+        freshUser.posts = (freshUser.posts.filter(post => post.id !== id));
+        console.log(freshUser.posts);
+        setUser(freshUser);
     })
     .catch((error) => {
         console.error("Error deleting user:", error);
@@ -114,7 +116,6 @@ function User() {
             <div className="flex items-start">
               <span className="text-gray-500 mr-2">Bio:</span>
               <span className="flex-1 text-left">{user.bio}</span>
-              {/* <PencilIcon className="w-5 h-5 text-gray-500 cursor-pointer" /> */}
             </div>
             <div className="flex items-start mt-2">
               <span className="text-gray-500 mr-2">Email:</span>
@@ -146,13 +147,13 @@ function User() {
             {user.posts.map((post) => (
               <div
                 key={post.id}
-                className="relative overflow-hidden rounded-lg cursor-pointer"
+                className="relative overflow-hidden rounded-lg cursor-pointer flex items-center justify-center"
               >
-                <img
+                {post.photo !== "null"?<img
                   src={`http://localhost:5000/img/posts/${post.photo}`}
                   alt="Post"
                   className="w-full h-full"
-                />
+                />:<p className="text-3xl">{post.caption}</p>}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 bg-black bg-opacity-50 hover:opacity-100">
                   <div className="flex items-center space-x-2">
                     <PencilIcon className="w-6 h-6 text-gray-100 cursor-pointer" />

@@ -27,9 +27,6 @@ function Post(props) {
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log(props.photo)
-  }, [posts])
 
   const handleCommentBox = (e) => {
     setTypedComment(e.target.value);

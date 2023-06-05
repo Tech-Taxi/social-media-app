@@ -25,16 +25,17 @@ function Home() {
 
           const resPosts = await res;
           setPosts(resPosts.data.data.posts);
-          setLoading(false);
-
+          
           const data = axios.get(`http://localhost:5000/api/v1/users/me`, {
             withCredentials: true,
           });
-
+          
           const dataUser = await data;
+          setLoading(false);
           setUser(dataUser.data.data);
         } catch (err) {
           console.log(err.response);
+          setLoading(false);
         }
       },
     []
@@ -45,9 +46,9 @@ function Home() {
         <UserContext.Provider value={{ user, setUser, d, toggleD }}>
           {d && <Register />}
           <>
-            <div className="w-full fixed top-0 z-50 border-b-2 border-blue-400">
+            {!loading && <div className="w-full fixed top-0 z-50 border-b-2 border-blue-400">
               <Navbar />
-            </div>
+            </div>}
             <div className="flex mt-16">
               <div className="w-1/3">
                 <Owndetails />
