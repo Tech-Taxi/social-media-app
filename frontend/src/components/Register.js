@@ -1,7 +1,6 @@
 import React, {  useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
-// import { useLocation } from 'react-router-dom';
 
 const LoginPage = () => {
   const [activeComponent, setActiveComponent] = useState('login');

@@ -5,7 +5,7 @@ import axios from "axios";
 import { PostContext } from "../contexts/PostContext";
 import { UserContext } from "../contexts/UserContext";
 
-function CommentsModal({ id, isOpen, onRequestClose }) {
+function CommentsModal({ id, onRequestClose }) {
   const [postDetails, setPostDetails] = useState(null);
   const [typedComment, setTypedComment] = useState("");
   const [isLiked, setLiked] = useState(false);
