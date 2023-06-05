@@ -53,7 +53,7 @@ exports.createPost = catchAsync(async (req, res, next) => {
 
 exports.updatePost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.id);
-  if (post.author.toString() !== req.user.id)
+  if (post.author.id.toString() !== req.user.id)
     return next(
       new AppError('You are not authorized to update that post', 401),
     );

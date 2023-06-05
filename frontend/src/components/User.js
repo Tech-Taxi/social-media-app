@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { PencilIcon, CameraIcon, TrashIcon } from "@heroicons/react/outline";
 import EditModal from "./EditModal";
+import EditPost from "./EditPost";
 
 function User() {
   const [user, setUser] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
   useEffect(
     () =>
       async function () {
@@ -19,7 +22,7 @@ function User() {
           console.log(err.response);
         }
       },
-    []
+    [showUpdateModal]
   );
 
   const handleEditClick = () => {
@@ -64,7 +67,6 @@ function User() {
   };
 
   const handledeletePost = (id)=>{
-    console.log(id)
     axios.delete(`http://localhost:5000/api/v1/posts/${id}`, { withCredentials: true })
     .then((response) => {
         let freshUser = {...user};
@@ -75,8 +77,16 @@ function User() {
     .catch((error) => {
         console.error("Error deleting user:", error);
     });
-
   };
+
+  const handleUpdateModal = (post)=>{
+    setSelectedPost(post)
+    setShowUpdateModal(true);
+  }
+  const handleCloseUpdateModal = ()=>{
+    setSelectedPost(null);
+    setShowUpdateModal(false);
+  }
 
   return (
     user && (
@@ -156,10 +166,13 @@ function User() {
                 />:<p className="text-3xl">{post.caption}</p>}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 bg-black bg-opacity-50 hover:opacity-100">
                   <div className="flex items-center space-x-2">
-                    <PencilIcon className="w-6 h-6 text-gray-100 cursor-pointer" />
+                    <PencilIcon className="w-6 h-6 text-gray-100 cursor-pointer" onClick={()=>{handleUpdateModal(post)}}/>
                     <TrashIcon className="w-6 h-6 text-gray-100 cursor-pointer" onClick={()=>{handledeletePost(post.id)}}/>
                   </div>
                 </div>
+                {selectedPost && showUpdateModal && (
+                    <EditPost post={selectedPost} onClose={handleCloseUpdateModal} />
+                )}
               </div>
             ))}
           </div>
