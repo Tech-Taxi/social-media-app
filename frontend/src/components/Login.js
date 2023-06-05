@@ -23,7 +23,6 @@ const Login = () => {
       )
       .then((response) => {
         if (response.data.status === "success") {
-          alert("Logged in Successfully 🥳");
           setUser(response.data.user);
           toggleD(false);
         }

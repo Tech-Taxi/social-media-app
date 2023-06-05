@@ -1,4 +1,6 @@
 const Follow = require('../models/follow');
+const User = require('../models/user');
+
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
@@ -16,17 +18,29 @@ exports.followUser = catchAsync(async (req, res, next) => {
 
   if (existingFollow) {
     await Follow.deleteOne({ _id: existingFollow._id });
+    const user = await User.findById(req.body.from)
+      .populate('posts')
+      .populate('comments')
+      .populate('likes')
+      .populate('followers')
+      .populate('following');
     res.status(200).json({
       status: 'success',
-      message: 'Unfollowed user successfully',
+      message: { user },
     });
     return;
   }
 
-  const follow = await Follow.create(req.body);
+  await Follow.create(req.body);
+  const user = await User.findById(req.body.from)
+    .populate('posts')
+    .populate('comments')
+    .populate('likes')
+    .populate('followers')
+    .populate('following');
+
   res.status(200).json({
     status: 'success',
-    data: follow,
+    data: { user },
   });
-
 });

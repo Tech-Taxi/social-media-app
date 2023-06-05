@@ -4,7 +4,7 @@ import { UserContext } from "../contexts/UserContext";
 
 const PeopleToFollow = () => {
   const [usersToFollow, setUsersToFollow] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   function difference(superset, subset) {
     subset.push({ to: user.id });
@@ -34,7 +34,7 @@ const PeopleToFollow = () => {
       );
 
       if (response.data.status === "success") {
-        console.log(`User with ID ${userId} followed successfully`);
+        setUser(response.data.data.user);
       }
     } catch (error) {
       console.error(error);
