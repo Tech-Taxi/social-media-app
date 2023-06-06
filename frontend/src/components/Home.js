@@ -31,11 +31,13 @@ function Home() {
         }
 
         try {
+          console.log("Inside HOME")
           const res = axios.get(`${BACKEND_URI}/api/v1/posts`, {
             withCredentials: true,
           });
 
           const resPosts = await res;
+          console.log(res);
           setPosts(resPosts.data.data.posts);
           setLoading(false);
 
