@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const corsOptions = {
-  origin: ['http://192.168.1.180:3000', 'http://localhost:3000', 'https://summerconnections.netlify.app', process.env.FRONTEND_URI],
+  origin: ['http://192.168.1.180:3000', 'http://localhost:3000', 'https://summersocials.onrender.com', process.env.FRONTEND_URI],
   credentials: true,
   optionSuccessStatus: 200,
 };
