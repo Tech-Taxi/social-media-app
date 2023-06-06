@@ -51,8 +51,8 @@ function Owndetails() {
 
   return (
     user && (
-      <div className="relative flex flex-col items-center mx-16 my-4 px-5 py-4 bg-white rounded-lg shadow-xl z-1 dark:bg-slate-800 dark:text-white">
-        <div className="absolute top-0 right-0 mt-2 mr-2 z-1">
+      <div className="relative flex flex-col items-center mx-16 my-4 px-5 py-4 bg-white rounded-lg shadow-xl z-0 dark:bg-slate-800 dark:text-white">
+        <div className="absolute top-0 right-0 mt-2 mr-2">
           <PencilIcon
             className="w-6 h-6 text-gray-500 cursor-pointer dark:text-gray-300"
             onClick={handleEditClick}

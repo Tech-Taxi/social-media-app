@@ -46,7 +46,7 @@ const Signup = () => {
   return (
     <div className="mx-auto">
       <h2 className="text-2xl font-bold mb-4">Signup</h2>
-      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-x-6">
+      <form onSubmit={handleSubmit} className="grid grid-cols-2 md:gap-x-6 gap-x-1">
         <div className="mb-4">
           <label className="block text-left">Name</label>
           <input
@@ -89,8 +89,9 @@ const Signup = () => {
         </div>
         <div className="mb-4">
           <label className="block text-left">Gender</label>
+          <div className="grid grid-cols-2 px-5">
           <input
-            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
+            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700 w-4"
             type="radio"
             ref={maleRef}
             value={"Male"}
@@ -98,7 +99,7 @@ const Signup = () => {
           />
           <span className="mr-3">Male</span>
           <input
-            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
+            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700 w-4"
             type="radio"
             ref={femaleRef}
             value={"Female"}
@@ -106,18 +107,19 @@ const Signup = () => {
           />
           <span className="mr-3">Female</span>
           <input
-            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
+            className="mr-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700 w-4"
             type="radio"
             ref={othersRef}
             value={"Other"}
             name="gender"
           />
           <span className="mr-3">Other</span>
+          </div>
         </div>
         <div className="mb-4">
           <label className="block text-left">Birthday</label>
           <input
-            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-blue-500 dark:bg-slate-700"
             type="date"
             ref={dob}
             required

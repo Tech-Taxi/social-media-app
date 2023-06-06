@@ -95,9 +95,9 @@ function CommentsModal({ id, onRequestClose }) {
   } else {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 dark:bg-slate-900 dark:bg-opacity-50">
-        <div className="bg-white w-full max-w-2xl mx-auto rounded-lg overflow-hidden dark:bg-slate-700">
+        <div className="md:mx-0 mx-2 bg-white w-full max-w-2xl mx-auto rounded-lg overflow-hidden dark:bg-slate-700">
           <div className="grid grid-cols-2">
-            <div className="p-4 h-full">
+            <div className="p-4 h-full md:block flex flex-col justify-center items-center">
               {postDetails.photo !== "null" ? (
                 <>
                   <img
@@ -111,7 +111,7 @@ function CommentsModal({ id, onRequestClose }) {
                   </p>
                 </>
               ) : (
-                <div className="h-full flex items-center justify-center">
+                <div className="md:h-full h-1/2 flex items-center justify-center">
                   <p className="text-xl">{postDetails.caption}</p>
                 </div>
               )}
@@ -148,7 +148,7 @@ function CommentsModal({ id, onRequestClose }) {
                 )}
               </div>
 
-              <div className="flex justify-between mr-2">
+              <div className="md:flex hidden justify-between mr-2">
                 {isLiked ? (
                   <div className="flex items-center mb-4">
                     <HeartSolid
@@ -174,8 +174,7 @@ function CommentsModal({ id, onRequestClose }) {
                   {postDetails.commentCount} Comments
                 </div>
               </div>
-
-              <div className="flex mb-4 gap-2">
+              <div className="md:flex mb-4 gap-2 hidden">
                 <input
                   type="text"
                   placeholder="Add a comment ..."
@@ -191,6 +190,47 @@ function CommentsModal({ id, onRequestClose }) {
                 </button>
               </div>
             </div>
+          </div>
+          <div className="md:hidden flex px-5 justify-between mr-2">
+                {isLiked ? (
+                  <div className="flex items-center mb-4">
+                    <HeartSolid
+                      className="w-6 h-6 mr-1 text-red-700 cursor-pointer dark:text-gray-100"
+                      onClick={handleLike}
+                    />
+                    <span className="font-semibold">
+                      {postDetails.likeCount}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center mb-4">
+                    <HeartOutline
+                      className="w-6 h-6 mr-1 text-gray-700 cursor-pointer dark:text-gray-100"
+                      onClick={handleLike}
+                    />
+                    <span className="font-semibold">
+                      {postDetails.likeCount}
+                    </span>
+                  </div>
+                )}
+                <div className="cursor-pointer">
+                  {postDetails.commentCount} Comments
+                </div>
+              </div>
+          <div className="md:hidden flex mb-4 gap-2 w-full px-5">
+            <input
+              type="text"
+              placeholder="Add a comment ..."
+              className="flex-1 p-2 border border-gray-300 rounded-full"
+              value={typedComment}
+              onChange={handleCommentBox}
+            />
+            <button
+              className="bg-blue-500 text-white px-4 rounded-full hover:bg-blue-600 capitalize"
+              onClick={postComment}
+            >
+              Post
+            </button>
           </div>
         </div>
       </div>

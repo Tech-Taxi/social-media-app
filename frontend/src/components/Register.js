@@ -29,7 +29,7 @@ const LoginPage = () => {
           Signup
         </button>
       </div>
-      <div className="bg-white rounded-lg shadow-md p-6 mt-6 w-96 dark:bg-slate-700">
+      <div className="bg-white rounded-lg shadow-md p-6 mt-6 md:w-96 w-80 dark:bg-slate-700">
         {activeComponent === 'login' ? <Login /> : <Signup />}
       </div>
     </div>

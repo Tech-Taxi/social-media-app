@@ -91,7 +91,7 @@ function User() {
   return (
     user && (
       <div className="dark:bg-slate-700 -mt-4 py-5 dark:text-white">
-        <div className="relative flex flex-col items-center mx-16 my-4 px-5 py-4 bg-white rounded-lg shadow-xl dark:bg-slate-800">
+        <div className="relative flex flex-col items-center md:mx-16 mx-6 my-4 px-5 py-4 bg-white rounded-lg shadow-xl dark:bg-slate-800">
           <div className="absolute top-0 right-0 mt-2 mr-2 z-10">
             <PencilIcon
               className="w-6 h-6 dark:text-gray-300 text-gray-500 cursor-pointer"
@@ -152,8 +152,8 @@ function User() {
             />
           )}
         </div>
-        <div className="relative flex flex-col items-center mx-16 my-4 px-5 py-4 bg-white rounded-lg shadow-xl dark:bg-slate-800">
-          <div className="grid grid-cols-3 gap-4 mt-8">
+        <div className="relative flex flex-col items-center md:mx-16 mx-6 my-4 px-5 py-4 bg-white rounded-lg shadow-xl dark:bg-slate-800">
+          <div className="grid md:grid-cols-3 grid-cols-1 gap-4 mt-8 pb-5">
             {user.posts.map((post) => (
               <div
                 key={post.id}

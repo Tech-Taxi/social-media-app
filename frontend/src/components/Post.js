@@ -134,7 +134,7 @@ function Post(props) {
           <div className="cursor-pointer">{props.comments} Comments</div>
         </div>
         <div className="mt-3 flex gap-5">
-          <div className="flex gap-2 flex-start items-center">
+          <div className="flex gap-2 flex-start items-center w-16">
             {isLiked ? (
               <HeartSolid
                 className="w-6 h-6 text-red-700 cursor-pointer dark:text-gray-100"
@@ -159,10 +159,10 @@ function Post(props) {
               />
             )}
           </div>
-          <div className="flex w-full items-center justify-between">
+          <div className="flex w-[calc(100%-5rem)] gap-3 items-center justify-between">
             <input
               type="text"
-              className="w-64 h-6 rounded-full px-2 my-0 py-3 border border-gray-300 focus:outline-none focus:border-blue-500"
+              className="w-64 h-6 rounded-full px-2 my-0 py-3 border border-gray-300 focus:outline-none focus:border-blue-500 dark:bg-slate-800 dark:text-white"
               placeholder="Enter text"
               value={typedComment}
               onChange={handleCommentBox}

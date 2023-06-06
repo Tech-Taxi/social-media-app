@@ -11,13 +11,13 @@ const Navbar = () => {
   };
 
   return (
-    <div className="h-14 items-center flex bg-white dark:bg-slate-800 z-52">
+    <div className="h-14 items-center flex bg-white dark:bg-slate-800 z-20 w-full">
       <div className="w-1/2 flex justify-start px-6">
-        <h1 className="text-2xl font-semibold text-blue-700 dark:text-blue-500">
+        <h1 className="md:text-2xl text-lg font-semibold text-blue-700 dark:text-blue-500">
           <Link to={"/"}>Social Media</Link>
         </h1>
       </div>
-      <div className="w-1/2 flex justify-end gap-5 mx-6 px-6">
+      <div className="w-1/2 flex justify-end gap-5 md:mx-6 px-6">
         {!user ? (
           <button
             className="bg-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-medium border-b-2 border-transparent py-1 px-3 rounded-full hover:bg-blue-600"

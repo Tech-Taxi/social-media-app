@@ -53,7 +53,7 @@ function Home() {
   );
 
   return (
-    <div className="dark:bg-slate-700 min-h-screen">
+    <div className="dark:bg-slate-700 min-h-screen ">
       <PostContext.Provider value={{ posts, setPosts, loading }}>
         <UserContext.Provider value={{ user, setUser, d, toggleD }}>
           
@@ -65,14 +65,14 @@ function Home() {
               </div>
             )}
             <div className={`flex ${loading ? "mt-0" : "mt-14"}`}>
-              <div className="w-1/3">
+              <div className="w-1/3 md:block hidden">
                 <Owndetails />
               </div>
-              <div className="w-1/3">
+              <div className="md:w-1/3 w-full px-4">
                 {user && <CreatePost />}
                 <Feed />
               </div>
-              <div className="w-1/3">
+              <div className="w-1/3 md:block hidden">
                 <Connections />
               </div>
             </div>
