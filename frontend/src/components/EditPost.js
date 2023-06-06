@@ -28,7 +28,7 @@ function EditPost({post, onClose}) {
   };
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-      <div className="bg-white w-full max-w-md mx-auto rounded-lg overflow-hidden transform transition-transform ease-in-out duration-300 -translate-x-full md:-translate-x-1/2">
+      <div className="bg-white dark:bg-slate-600 dark:text-white w-full max-w-md mx-auto rounded-lg overflow-hidden transform transition-transform ease-in-out duration-300 -translate-x-full md:-translate-x-1/2">
         <div className="p-4 bg-blue-500 text-white">
           <h2 className="text-xl font-semibold">Edit Caption</h2>
         </div>
@@ -42,7 +42,7 @@ function EditPost({post, onClose}) {
                 type="text"
                 id="name"
                 name="caption"
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-slate-600 dark:text-white"
                 value={formData.caption}
                 onChange={handleChange}
               />

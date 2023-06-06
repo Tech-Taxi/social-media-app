@@ -18,6 +18,17 @@ function Home() {
   useEffect(
     () =>
       async function () {
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (
+          localStorage.theme === "light" ||
+          (!("theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("light");
+        } else {
+          document.documentElement.classList.remove("light");
+        }
+
         try {
           const res = axios.get("http://localhost:5000/api/v1/posts", {
             withCredentials: true,
@@ -25,11 +36,11 @@ function Home() {
 
           const resPosts = await res;
           setPosts(resPosts.data.data.posts);
-          
+
           const data = axios.get(`http://localhost:5000/api/v1/users/me`, {
             withCredentials: true,
           });
-          
+
           const dataUser = await data;
           setLoading(false);
           setUser(dataUser.data.data);
@@ -40,16 +51,20 @@ function Home() {
       },
     []
   );
+
   return (
-    <div className="my-2">
+    <div className="dark:bg-slate-700 min-h-screen">
       <PostContext.Provider value={{ posts, setPosts, loading }}>
         <UserContext.Provider value={{ user, setUser, d, toggleD }}>
+          
           {d && <Register />}
           <>
-            {!loading && <div className="w-full fixed top-0 left-0 border-b-2 border-blue-400">
-              <Navbar />
-            </div>}
-            <div className="flex mt-14 dark:bg-slate-700">
+            {!loading && (
+              <div className="w-full fixed top-0 left-0 border-b-2 border-blue-400">
+                <Navbar />
+              </div>
+            )}
+            <div className={`flex ${loading ? "mt-0" : "mt-14"}`}>
               <div className="w-1/3">
                 <Owndetails />
               </div>

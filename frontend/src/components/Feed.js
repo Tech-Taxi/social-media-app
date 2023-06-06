@@ -8,11 +8,11 @@ function Feed() {
   return (
     <div>
       {loading ? (
-        <div className="flex justify-center items-center h-64">
+        <div className="flex justify-center items-center h-screen">
           <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gray-600 rounded-full animate-bounce"></div>
-            <div className="w-6 h-6 bg-gray-600 rounded-full animate-bounce200"></div>
-            <div className="w-6 h-6 bg-gray-600 rounded-full animate-bounce400"></div>
+            <div className="w-6 h-6 bg-gray-600 rounded-full animate-bounce dark:bg-gray-100"></div>
+            <div className="w-6 h-6 bg-gray-600 rounded-full animate-bounce dark:bg-gray-100" style={{animationDelay: "75ms"}}></div>
+            <div className="w-6 h-6 bg-gray-600 rounded-full animate-bounce  dark:bg-gray-100" style={{animationDelay: "150ms"}}></div>
           </div>
         </div>
       ) : (
