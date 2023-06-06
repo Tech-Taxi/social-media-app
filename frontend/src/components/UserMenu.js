@@ -5,6 +5,8 @@ import { UserContext } from "../contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import { BACKEND_URI } from "../config";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -14,7 +16,7 @@ export default function UserMenu() {
     const navigate = useNavigate();
     const handleLogout = () => {
         axios
-        .get("http://localhost:5000/api/v1/users/logout", { withCredentials: true })
+        .get(`${BACKEND_URI}/api/v1/users/logout`, { withCredentials: true })
         .then((res) => {
           alert("Bye 👋 See ya later 😄");
           navigate(0);
@@ -28,7 +30,7 @@ export default function UserMenu() {
         <Menu.Button className="inline-flex w-full justify-center cursor-default">
           <img
             className="rounded-full"
-            src={user ? `http://localhost:5000/img/users/${user.photo}` : null}
+            src={user ? `${BACKEND_URI}/img/users/${user.photo}` : null}
             alt=""
           />
           <ChevronDownIcon
@@ -65,7 +67,7 @@ export default function UserMenu() {
             <Menu.Item>
               {({ active }) => (
                 <button
-                  href="http://localhost:5000/api/v1/users/logout"
+                  href={`${BACKEND_URI}/api/v1/users/logout`}
                   onClick={handleLogout}
                   className={classNames(
                     active

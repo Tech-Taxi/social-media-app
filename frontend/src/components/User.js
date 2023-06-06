@@ -4,6 +4,8 @@ import { PencilIcon, CameraIcon, TrashIcon } from "@heroicons/react/outline";
 import EditModal from "./EditModal";
 import EditPost from "./EditPost";
 
+import { BACKEND_URI } from "../config";
+
 function User() {
   const [user, setUser] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,7 +15,7 @@ function User() {
     () =>
       async function () {
         try {
-          const data = axios.get(`http://localhost:5000/api/v1/users/me`, {
+          const data = axios.get(`${BACKEND_URI}/api/v1/users/me`, {
             withCredentials: true,
           });
           const dataUser = await data;
@@ -44,7 +46,7 @@ function User() {
 
         if (shouldUpdate) {
           axios
-            .patch("http://localhost:5000/api/v1/users/updateMe", formData, {
+            .patch(`${BACKEND_URI}/api/v1/users/updateMe`, formData, {
               withCredentials: true,
             })
             .then((response) => {
@@ -67,7 +69,7 @@ function User() {
   };
 
   const handledeletePost = (id)=>{
-    axios.delete(`http://localhost:5000/api/v1/posts/${id}`, { withCredentials: true })
+    axios.delete(`${BACKEND_URI}/api/v1/posts/${id}`, { withCredentials: true })
     .then((response) => {
         let freshUser = {...user};
         freshUser.posts = (freshUser.posts.filter(post => post.id !== id));
@@ -100,7 +102,7 @@ function User() {
           </div>
           <div className="relative group">
             <img
-              src={`http://localhost:5000/img/users/${user.photo}`}
+              src={`${BACKEND_URI}/img/users/${user.photo}`}
               alt={user.name}
               className="w-48 h-48 rounded-full object-cover cursor-pointer"
             />
@@ -160,7 +162,7 @@ function User() {
                 className="relative overflow-hidden rounded-lg cursor-pointer flex items-center justify-center"
               >
                 {post.photo !== "null"?<img
-                  src={`http://localhost:5000/img/posts/${post.photo}`}
+                  src={`${BACKEND_URI}/img/posts/${post.photo}`}
                   alt="Post"
                   className="w-full h-full"
                 />:<p className="text-3xl">{post.caption}</p>}

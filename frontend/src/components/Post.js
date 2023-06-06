@@ -11,6 +11,8 @@ import CommentsModal from "./CommentsModal";
 import { UserContext } from "../contexts/UserContext";
 import { PostContext } from "../contexts/PostContext";
 
+import { BACKEND_URI } from "../config";
+
 function Post(props) {
   const [showModal, setShowModal] = useState(false);
   const [showFullCaption, setShowFullCaption] = useState(false);
@@ -50,7 +52,7 @@ function Post(props) {
   const handleLike = () => {
     axios
       .post(
-        `http://localhost:5000/api/v1/posts/${props.id}/like`,
+        `${BACKEND_URI}/api/v1/posts/${props.id}/like`,
         {},
         { withCredentials: true }
       )
@@ -72,7 +74,7 @@ function Post(props) {
     } else {
       axios
         .post(
-          `http://localhost:5000/api/v1/posts/${props.id}/comment`,
+          `${BACKEND_URI}/api/v1/posts/${props.id}/comment`,
           {
             content: typedComment,
           },
@@ -100,7 +102,7 @@ function Post(props) {
       <div className="p-3">
         <div className="flex items-center">
           <img
-            src={`http://localhost:5000/img/users/${props.authorimg}`}
+            src={`${BACKEND_URI}/img/users/${props.authorimg}`}
             alt="User Avatar"
             className="w-10 h-10 rounded-full mr-4"
           />
@@ -124,7 +126,7 @@ function Post(props) {
         </div>
         {props.photo !== "null" && (
           <img
-            src={`http://localhost:5000/img/posts/${props.photo}`}
+            src={`${BACKEND_URI}/img/posts/${props.photo}`}
             alt=""
             className="w-full object-cover"
           />

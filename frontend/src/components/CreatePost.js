@@ -4,6 +4,8 @@ import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
 import { PostContext } from "../contexts/PostContext";
 
+import { BACKEND_URI } from "../config";
+
 const CreatePost = () => {
   const { user } = useContext(UserContext);
   const comment = useRef();
@@ -11,7 +13,7 @@ const CreatePost = () => {
   const [previewURL, setPreviewURL] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const {posts, setPosts} = useContext(PostContext)
+  const { posts, setPosts } = useContext(PostContext);
 
   const handleChoosePhoto = (e) => {
     const file = e.target.files[0];
@@ -31,7 +33,7 @@ const CreatePost = () => {
       formData.append("photo", selectedPhoto);
 
       const response = await axios.post(
-        "http://localhost:5000/api/v1/posts",
+        `${BACKEND_URI}/api/v1/posts`,
         formData,
         {
           withCredentials: true,
@@ -43,7 +45,7 @@ const CreatePost = () => {
 
       if (response.data.status === "success") {
         alert("Post created successfully 🎉");
-        setPosts(() => [response.data.data, ...posts])
+        setPosts(() => [response.data.data, ...posts]);
         setSelectedPhoto(null);
         setPreviewURL(null);
         comment.current.value = "";
@@ -54,13 +56,13 @@ const CreatePost = () => {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="flex items-start space-x-4 p-4 bg-white rounded-lg shadow-2xl my-4 dark:bg-slate-800">
       <div className="w-12 h-12 rounded-full bg-gray-200">
         <img
           className="rounded-full"
-          src={(user) ? `http://localhost:5000/img/users/${user.photo}`: null}
+          src={user ? `${BACKEND_URI}/img/users/${user.photo}` : null}
           alt=""
         />
       </div>
@@ -101,10 +103,11 @@ const CreatePost = () => {
             onClick={handlePost}
             disabled={loading}
           >
-            {loading 
-              ? <div className="h-4 w-4 rounded-full border-t-2 border-white border-opacity-50 animate-spin mr-2"></div>            
-              : "Post"
-            }
+            {loading ? (
+              <div className="h-4 w-4 rounded-full border-t-2 border-white border-opacity-50 animate-spin mr-2"></div>
+            ) : (
+              "Post"
+            )}
           </button>
         </div>
       </div>

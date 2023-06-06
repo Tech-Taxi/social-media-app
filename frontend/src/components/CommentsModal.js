@@ -5,6 +5,8 @@ import axios from "axios";
 import { PostContext } from "../contexts/PostContext";
 import { UserContext } from "../contexts/UserContext";
 
+import { BACKEND_URI } from "../config";
+
 function CommentsModal({ id, onRequestClose }) {
   const [postDetails, setPostDetails] = useState(null);
   const [typedComment, setTypedComment] = useState("");
@@ -19,7 +21,7 @@ function CommentsModal({ id, onRequestClose }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/v1/posts/${id}`, {
+      .get(`${BACKEND_URI}/api/v1/posts/${id}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -44,7 +46,7 @@ function CommentsModal({ id, onRequestClose }) {
   const handleLike = () => {
     axios
       .post(
-        `http://localhost:5000/api/v1/posts/${id}/like`,
+        `${BACKEND_URI}/api/v1/posts/${id}/like`,
         {},
         { withCredentials: true }
       )
@@ -67,7 +69,7 @@ function CommentsModal({ id, onRequestClose }) {
     } else {
       axios
         .post(
-          `http://localhost:5000/api/v1/posts/${id}/comment`,
+          `${BACKEND_URI}/api/v1/posts/${id}/comment`,
           {
             content: typedComment,
           },
@@ -101,7 +103,7 @@ function CommentsModal({ id, onRequestClose }) {
               {postDetails.photo !== "null" ? (
                 <>
                   <img
-                    src={`http://localhost:5000/img/posts/${postDetails.photo}`}
+                    src={`${BACKEND_URI}/img/posts/${postDetails.photo}`}
                     alt="Post"
                     className="w-full my-auto h-auto"
                   />
@@ -130,7 +132,7 @@ function CommentsModal({ id, onRequestClose }) {
                     return (
                       <div key={index} className="flex mb-2 items-center">
                         <img
-                          src={`http://localhost:5000/img/users/${comment.author.photo}`}
+                          src={`${BACKEND_URI}/img/users/${comment.author.photo}`}
                           alt="User Avatar"
                           className="w-10 h-10 rounded-full mr-4"
                         />

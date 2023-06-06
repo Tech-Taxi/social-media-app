@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+import { BACKEND_URI } from "../config";
 
 const Signup = () => {
   const name = useRef();
@@ -13,6 +14,7 @@ const Signup = () => {
   const othersRef = useRef();
   const navigate = useNavigate();
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let selectedGender = '';
@@ -24,7 +26,7 @@ const Signup = () => {
       selectedGender = othersRef.current.value;
     }
     axios
-      .post("http://localhost:5000/api/v1/users/register", {
+      .post(`${BACKEND_URI}/api/v1/users/register`, {
         name: name.current.value,
         email: email.current.value,
         password: password.current.value,

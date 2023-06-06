@@ -9,6 +9,8 @@ import Connections from "./Connections";
 import Owndetails from "./OwnDetails";
 import { PostContext } from "../contexts/PostContext";
 
+import { BACKEND_URI } from "../config";
+
 function Home() {
   const [user, setUser] = useState();
   const [d, toggleD] = useState(false);
@@ -18,7 +20,6 @@ function Home() {
   useEffect(
     () =>
       async function () {
-        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
         if (
           localStorage.theme === "light" ||
           (!("theme" in localStorage) &&
@@ -30,14 +31,14 @@ function Home() {
         }
 
         try {
-          const res = axios.get("http://localhost:5000/api/v1/posts", {
+          const res = axios.get(`${BACKEND_URI}/api/v1/posts`, {
             withCredentials: true,
           });
 
           const resPosts = await res;
           setPosts(resPosts.data.data.posts);
 
-          const data = axios.get(`http://localhost:5000/api/v1/users/me`, {
+          const data = axios.get(`${BACKEND_URI}/api/v1/users/me`, {
             withCredentials: true,
           });
 

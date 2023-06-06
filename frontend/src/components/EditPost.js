@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import axios from 'axios';
 
+import { BACKEND_URI } from '../config';
+
 function EditPost({post, onClose}) {
   const [formData, setFormData] = useState({
     caption: post.caption,
@@ -12,7 +14,7 @@ function EditPost({post, onClose}) {
     e.preventDefault();
 
     axios
-      .patch(`http://localhost:5000/api/v1/posts/update/${post.id}`, formData, {
+      .patch(`${BACKEND_URI}/api/v1/posts/update/${post.id}`, formData, {
         withCredentials: true,
       })
       .then((response) => {

@@ -7,10 +7,6 @@ import { useEffect, useState } from "react";
 function App() {
   const [dark, setDark] = useState(localStorage.theme === "dark");
 
-  // useEffect(() => {
-  //   if (localStorage.theme === "light") setDark(false); 
-  // }, []);
-
   useEffect(() => {
     if (dark) {
       document.documentElement.classList.add("dark");

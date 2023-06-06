@@ -4,6 +4,8 @@ import { PencilIcon, CameraIcon } from "@heroicons/react/outline";
 import EditModal from "./EditModal";
 import { UserContext } from "../contexts/UserContext";
 
+import { BACKEND_URI } from "../config";
+
 function Owndetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
@@ -27,7 +29,7 @@ function Owndetails() {
 
         if (shouldUpdate) {
           axios
-            .patch("http://localhost:5000/api/v1/users/updateMe", formData, {
+            .patch(`${BACKEND_URI}/api/v1/users/updateMe`, formData, {
               withCredentials: true,
             })
             .then((response) => {
@@ -60,7 +62,7 @@ function Owndetails() {
         </div>
         <div className="relative group">
           <img
-            src={`http://localhost:5000/img/users/${user.photo}`}
+            src={`${BACKEND_URI}/img/users/${user.photo}`}
             alt={user.name}
             className="w-24 h-24 rounded-full object-cover cursor-pointer"
           />

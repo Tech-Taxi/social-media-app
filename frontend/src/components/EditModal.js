@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import {BACKEND_URI} from "../config"
+
 function EditModal({ user, setUser, onClose }) {
   const today = new Date().toISOString().split("T")[0];
   const [formData, setFormData] = useState({
@@ -18,7 +20,7 @@ function EditModal({ user, setUser, onClose }) {
     e.preventDefault();
 
     axios
-      .patch("http://localhost:5000/api/v1/users/updateMe", formData, {
+      .patch(`${BACKEND_URI}/api/v1/users/updateMe`, formData, {
         withCredentials: true,
       })
       .then((response) => {

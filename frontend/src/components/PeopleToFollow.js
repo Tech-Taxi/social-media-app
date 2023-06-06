@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
 
+import { BACKEND_URI } from "../config";
+
 const PeopleToFollow = () => {
   const [usersToFollow, setUsersToFollow] = useState([]);
   const { user, setUser } = useContext(UserContext);
@@ -16,7 +18,7 @@ const PeopleToFollow = () => {
   useEffect(() => {
     if (user)
       axios
-        .get("http://localhost:5000/api/v1/users", { withCredentials: true })
+        .get(`${BACKEND_URI}/api/v1/users`, { withCredentials: true })
         .then((response) => {
           setUsersToFollow(difference(response.data.data.docs, user.following));
         })
@@ -28,7 +30,7 @@ const PeopleToFollow = () => {
   const handleFollowUser = async (userId) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/v1/users/user/${userId}/follow`,
+        `${BACKEND_URI}/api/v1/users/user/${userId}/follow`,
         {},
         { withCredentials: true }
       );
@@ -50,7 +52,7 @@ const PeopleToFollow = () => {
             {usersToFollow.map((user) => (
               <div key={user.id} className="flex items-center">
                 <img
-                  src={`http://localhost:5000/img/users/${user.photo}`}
+                  src={`${BACKEND_URI}/img/users/${user.photo}`}
                   alt={user.name}
                   className="w-9 h-9 rounded-full mr-2"
                 />
