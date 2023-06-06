@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const corsOptions = {
-  origin: ['http://127.0.0.1:5500', 'http://localhost:3000', process.env.FRONTEND_URI],
+  origin: ['http://192.168.1.180:3000', 'http://localhost:3000', process.env.FRONTEND_URI],
   credentials: true,
   optionSuccessStatus: 200,
 };
