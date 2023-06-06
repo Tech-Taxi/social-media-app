@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import UserMenu from "./UserMenu";
 
 const Navbar = () => {
   const { toggleD, d, user } = useContext(UserContext);
-  const navigate = useNavigate();
   const handleLogin = (e) => {
     toggleD(() => !d);
   };

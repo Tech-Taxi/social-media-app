@@ -8,14 +8,15 @@ const PeopleToFollow = () => {
   const [usersToFollow, setUsersToFollow] = useState([]);
   const { user, setUser } = useContext(UserContext);
 
-  function difference(superset, subset) {
-    subset.push({ to: user.id });
-    if (subset.length <= 0 || subset.length >= superset.length) return superset;
-    const subsetIds = subset.map((item) => item.to);
-    return superset.filter((item) => !subsetIds.includes(item.id));
-  }
+  
 
   useEffect(() => {
+    function difference(superset, subset) {
+      subset.push({ to: user.id });
+      if (subset.length <= 0 || subset.length >= superset.length) return superset;
+      const subsetIds = subset.map((item) => item.to);
+      return superset.filter((item) => !subsetIds.includes(item.id));
+    }
     if (user)
       axios
         .get(`${BACKEND_URI}/api/v1/users`, { withCredentials: true })

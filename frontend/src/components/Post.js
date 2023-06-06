@@ -27,7 +27,7 @@ function Post(props) {
       if (props.likes) setLiked(props.likes.includes(user.id));
       else setLiked(false);
     }
-  }, [user]);
+  }, [user, props.likes]);
 
 
   const handleCommentBox = (e) => {

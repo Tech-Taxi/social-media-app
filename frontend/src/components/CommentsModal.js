@@ -30,7 +30,7 @@ function CommentsModal({ id, onRequestClose }) {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (user && postDetails) {
