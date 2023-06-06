@@ -37,6 +37,7 @@ function Home() {
 
           const resPosts = await res;
           setPosts(resPosts.data.data.posts);
+          setLoading(false);
 
           const data = axios.get(`${BACKEND_URI}/api/v1/users/me`, {
             withCredentials: true,

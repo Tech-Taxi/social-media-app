@@ -29,7 +29,7 @@ const CreatePost = () => {
     try {
       setLoading(true);
       const formData = new FormData();
-      formData.append("caption", comment.current.value);
+      formData.append("caption", comment.current.value.trim());
       formData.append("photo", selectedPhoto);
 
       const response = await axios.post(
