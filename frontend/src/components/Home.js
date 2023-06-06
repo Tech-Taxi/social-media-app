@@ -39,6 +39,8 @@ function Home() {
           setPosts(resPosts.data.data.posts);
           setLoading(false);
 
+          console.log(resPosts.data.data.posts)
+
           const data = axios.get(`${BACKEND_URI}/api/v1/users/me`, {
             withCredentials: true,
           });
@@ -46,6 +48,8 @@ function Home() {
           const dataUser = await data;
           setLoading(false);
           setUser(dataUser.data.data);
+
+          console.log(dataUser.data.data)
         } catch (err) {
           console.log(err.response);
           setLoading(false);
