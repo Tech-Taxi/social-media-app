@@ -74,6 +74,8 @@ function Owndetails() {
           </div>
         </div>
         <h2 className="text-xl font-semibold mt-4">{user.name}</h2>
+        {
+          user.following && 
         <div className="flex mt-2">
           <div className="flex items-center mr-4">
             <span className="font-semibold">{user.followers.length}</span>
@@ -84,6 +86,7 @@ function Owndetails() {
             <span className="text-gray-500 ml-1  dark:text-gray-300">Following</span>
           </div>
         </div>
+        }
         <div className="mt-4">
           <div className="flex items-start">
             <span className="text-gray-500 mr-2 dark:text-gray-300">Bio:</span>

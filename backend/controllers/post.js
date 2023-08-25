@@ -1,13 +1,15 @@
-const multer = require('multer');
-const sharp = require('sharp');
-const Post = require('../models/post');
-const AppError = require('../utils/AppError');
-const catchAsync = require('../utils/catchAsync');
-const APIFeatures = require('../utils/apiFeatures');
-const { deleteOne } = require('./factory');
+const multer = require("multer");
+const sharp = require("sharp");
+const Post = require("../models/post");
+const Comment = require("../models/comment");
+const Like = require("../models/like");
+const AppError = require("../utils/AppError");
+const catchAsync = require("../utils/catchAsync");
+const APIFeatures = require("../utils/apiFeatures");
+const { deleteOne } = require("./factory");
 
 exports.getPosts = catchAsync(async (req, res, next) => {
-  req.query.sort = '-createdAt';
+  req.query.sort = "-createdAt";
   const features = new APIFeatures(Post.find(), req.query)
     .filter()
     .sort()
@@ -18,7 +20,7 @@ exports.getPosts = catchAsync(async (req, res, next) => {
   posts.map((post) => (post.likes = post.likes.map((like) => like.user)));
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: { posts },
     count: posts.length,
   });
@@ -27,12 +29,11 @@ exports.getPosts = catchAsync(async (req, res, next) => {
 exports.getPost = catchAsync(async (req, res, next) => {
   let post = await Post.findById(req.params.id);
 
-  if (!post) return next(new AppError('No post with that ID', 404));
-  post.likes = post.likes.map((like) => like.user)
-  
+  if (!post) return next(new AppError("No post with that ID", 404));
+  post.likes = post.likes.map((like) => like.user);
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: post,
   });
 });
@@ -43,40 +44,45 @@ exports.createPost = catchAsync(async (req, res, next) => {
   let post = await Post.create(req.body);
   post.active = undefined;
 
-  post = await Post.findById(post._id);
+  // post = await Post.findById(post._id);
+  post.author = req.user;
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: post,
   });
 });
 
 exports.updatePost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.id);
-  if (post.author.id.toString() !== req.user.id)
+  if (post.author.id.toString() !== req.user.id) {
     return next(
-      new AppError('You are not authorized to update that post', 401),
+      new AppError("You are not authorized to update that post", 401),
     );
+  }
 
   const freshPost = await Post.findByIdAndUpdate(post._id, req.body, {
     new: true,
   });
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: freshPost,
   });
 });
 
 exports.deletePost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.id);
-  if (post.author.id.toString() !== req.user.id)
+  if (post.author.id.toString() !== req.user.id) {
     return next(
-      new AppError('You are not authorized to delete that post', 401),
+      new AppError("You are not authorized to delete that post", 401),
     );
+  }
 
+  await Comment.deleteMany({ post: post._id });
+  await Like.deleteMany({ post: post._id });
   await Post.findByIdAndUpdate(post._id, { active: false });
   res.status(204).json({
-    status: 'success',
+    status: "success",
     data: null,
   });
 });
@@ -85,8 +91,8 @@ exports.deleteByAdmin = deleteOne(Post);
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) cb(null, true);
-  else cb(new AppError('Not an image.', 400), false);
+  if (file.mimetype.startsWith("image")) cb(null, true);
+  else cb(new AppError("Not an image.", 400), false);
 };
 
 const upload = multer({
@@ -94,14 +100,14 @@ const upload = multer({
   fileFilter: multerFilter,
 });
 
-exports.uploadPostPhoto = upload.single('photo');
+exports.uploadPostPhoto = upload.single("photo");
 
 exports.resizePhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
   await sharp(req.file.buffer)
     .resize(1500, 1500)
-    .toFormat('jpeg')
+    .toFormat("jpeg")
     .jpeg({ quality: 90 })
     .toFile(`public/img/posts/${req.file.filename}`);
   next();

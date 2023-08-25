@@ -1,8 +1,9 @@
 import "./App.css";
 import Register from "./components/Register";
 import HomeComponent from "./components/Home";
+import SpecificUser from "./components/SpecificUser";
 import User from "./components/User";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 function App() {
   const [dark, setDark] = useState(localStorage.theme === "dark");
@@ -43,6 +44,7 @@ function App() {
           <Route path="/" element={<HomeComponent />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/me" element={<User />} />
+          <Route exact path={`/user/:id`} element={<SpecificUser />} />
         </Routes>
       </Router>
     </div>

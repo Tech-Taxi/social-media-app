@@ -97,5 +97,6 @@ schema.pre(/^findOne$/, function (next) {
   next();
 });
 
+
 const Post = mongoose.model('Post', schema);
 module.exports = Post;

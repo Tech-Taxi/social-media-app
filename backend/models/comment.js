@@ -28,6 +28,7 @@ const schema = new mongoose.Schema(
 );
 
 schema.pre(/^find/, function(next) {
+  if(this.author !== null)
   this.populate({path: 'author', select: 'name photo'});
   next();
 })

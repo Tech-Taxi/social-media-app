@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
+import { Link } from "react-router-dom";
 
 import { BACKEND_URI } from "../config";
 
@@ -57,7 +58,7 @@ const PeopleToFollow = () => {
                   alt={user.name}
                   className="w-9 h-9 rounded-full mr-2"
                 />
-                <span className="mr-auto text-base">{user.name}</span>
+                <Link to={`/user/${user.id}`}><span className="mr-auto text-base">{user.name}</span></Link>
                 <button
                   className=" text-blue-500 font-bold py-0.5 px-1 text-xs rounded ml-5"
                   onClick={() => handleFollowUser(user.id)}

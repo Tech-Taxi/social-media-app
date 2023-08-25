@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { HeartIcon as HeartOutline } from "@heroicons/react/outline";
 import { HeartIcon as HeartSolid, XIcon } from "@heroicons/react/solid";
 import axios from "axios";
@@ -34,8 +34,9 @@ function CommentsModal({ id, onRequestClose }) {
 
   useEffect(() => {
     if (user && postDetails) {
-      if (postDetails.likes) setLiked(postDetails.likes.includes(user.id));
-      else setLiked(false);
+      if (postDetails.likes) {
+        setLiked(postDetails.likes.includes(user.id));
+      } else setLiked(false);
     }
   }, [user, postDetails]);
 
@@ -48,10 +49,9 @@ function CommentsModal({ id, onRequestClose }) {
       .post(
         `${BACKEND_URI}/api/v1/posts/${id}/like`,
         {},
-        { withCredentials: true }
+        { withCredentials: true },
       )
       .then((response) => {
-        setLiked(() => !isLiked);
         setPosts(() =>
           posts.map((post) =>
             post.id === response.data.data.post.id
@@ -60,6 +60,7 @@ function CommentsModal({ id, onRequestClose }) {
           )
         );
         setPostDetails(response.data.data.post);
+        setLiked(() => !isLiked);
       })
       .catch((err) => alert(err.response.data.message));
   };
@@ -73,7 +74,7 @@ function CommentsModal({ id, onRequestClose }) {
           {
             content: typedComment,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         )
         .then((response) => {
           setPosts(() =>
@@ -100,23 +101,25 @@ function CommentsModal({ id, onRequestClose }) {
         <div className="md:mx-0 mx-2 bg-white w-full max-w-2xl mx-auto rounded-lg overflow-hidden dark:bg-slate-700">
           <div className="grid grid-cols-2">
             <div className="p-4 h-full md:block flex flex-col justify-center items-center">
-              {postDetails.photo !== "null" ? (
-                <>
-                  <img
-                    src={`${BACKEND_URI}/img/posts/${postDetails.photo}`}
-                    alt="Post"
-                    className="w-full my-auto h-auto"
-                  />
+              {postDetails.photo !== "null"
+                ? (
+                  <>
+                    <img
+                      src={`${BACKEND_URI}/img/posts/${postDetails.photo}`}
+                      alt="Post"
+                      className="w-full my-auto h-auto"
+                    />
 
-                  <p className="text-md mt-1 text-left">
-                    {postDetails.caption}
-                  </p>
-                </>
-              ) : (
-                <div className="md:h-full h-1/2 flex items-center justify-center">
-                  <p className="text-xl">{postDetails.caption}</p>
-                </div>
-              )}
+                    <p className="text-md mt-1 text-left">
+                      {postDetails.caption}
+                    </p>
+                  </>
+                )
+                : (
+                  <div className="md:h-full h-1/2 flex items-center justify-center">
+                    <p className="text-xl">{postDetails.caption}</p>
+                  </div>
+                )}
             </div>
 
             <div className="p-4">
@@ -127,51 +130,53 @@ function CommentsModal({ id, onRequestClose }) {
                 />
               </div>
               <div className="overflow-y-auto h-60">
-                {postDetails.commentCount > 0 ? (
-                  postDetails.comments.map((comment, index) => {
-                    return (
-                      <div key={index} className="flex mb-2 items-center">
-                        <img
-                          src={`${BACKEND_URI}/img/users/${comment.author.photo}`}
-                          alt="User Avatar"
-                          className="w-10 h-10 rounded-full mr-4"
-                        />
-                        <div className="flex flex-col text-left">
-                          <span className="font-semibold">
-                            {comment.author.name}
-                          </span>
-                          <span className="">{comment.content}</span>
+                {postDetails.commentCount > 0
+                  ? (
+                    postDetails.comments.map((comment, index) => {
+                      return (
+                        <div key={index} className="flex mb-2 items-center">
+                          <img
+                            src={`${BACKEND_URI}/img/users/${comment.author.photo}`}
+                            alt="User Avatar"
+                            className="w-10 h-10 rounded-full mr-4"
+                          />
+                          <div className="flex flex-col text-left">
+                            <span className="font-semibold">
+                              {comment.author.name}
+                            </span>
+                            <span className="">{comment.content}</span>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <span className="fs-xl">This post has no comments 🥺</span>
-                )}
+                      );
+                    })
+                  )
+                  : <span className="fs-xl">This post has no comments 🥺</span>}
               </div>
 
               <div className="md:flex hidden justify-between mr-2">
-                {isLiked ? (
-                  <div className="flex items-center mb-4">
-                    <HeartSolid
-                      className="w-6 h-6 mr-1 text-red-700 cursor-pointer dark:text-gray-100"
-                      onClick={handleLike}
-                    />
-                    <span className="font-semibold">
-                      {postDetails.likeCount}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="flex items-center mb-4">
-                    <HeartOutline
-                      className="w-6 h-6 mr-1 text-gray-700 cursor-pointer dark:text-gray-100"
-                      onClick={handleLike}
-                    />
-                    <span className="font-semibold">
-                      {postDetails.likeCount}
-                    </span>
-                  </div>
-                )}
+                {isLiked
+                  ? (
+                    <div className="flex items-center mb-4">
+                      <HeartSolid
+                        className="w-6 h-6 mr-1 text-red-700 cursor-pointer dark:text-gray-100"
+                        onClick={handleLike}
+                      />
+                      <span className="font-semibold">
+                        {postDetails.likeCount}
+                      </span>
+                    </div>
+                  )
+                  : (
+                    <div className="flex items-center mb-4">
+                      <HeartOutline
+                        className="w-6 h-6 mr-1 text-gray-700 cursor-pointer dark:text-gray-100"
+                        onClick={handleLike}
+                      />
+                      <span className="font-semibold">
+                        {postDetails.likeCount}
+                      </span>
+                    </div>
+                  )}
                 <div className="cursor-pointer">
                   {postDetails.commentCount} Comments
                 </div>
@@ -194,31 +199,33 @@ function CommentsModal({ id, onRequestClose }) {
             </div>
           </div>
           <div className="md:hidden flex px-5 justify-between mr-2">
-                {isLiked ? (
-                  <div className="flex items-center mb-4">
-                    <HeartSolid
-                      className="w-6 h-6 mr-1 text-red-700 cursor-pointer dark:text-gray-100"
-                      onClick={handleLike}
-                    />
-                    <span className="font-semibold">
-                      {postDetails.likeCount}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="flex items-center mb-4">
-                    <HeartOutline
-                      className="w-6 h-6 mr-1 text-gray-700 cursor-pointer dark:text-gray-100"
-                      onClick={handleLike}
-                    />
-                    <span className="font-semibold">
-                      {postDetails.likeCount}
-                    </span>
-                  </div>
-                )}
-                <div className="cursor-pointer">
-                  {postDetails.commentCount} Comments
+            {isLiked
+              ? (
+                <div className="flex items-center mb-4">
+                  <HeartSolid
+                    className="w-6 h-6 mr-1 text-red-700 cursor-pointer dark:text-gray-100"
+                    onClick={handleLike}
+                  />
+                  <span className="font-semibold">
+                    {postDetails.likeCount}
+                  </span>
                 </div>
-              </div>
+              )
+              : (
+                <div className="flex items-center mb-4">
+                  <HeartOutline
+                    className="w-6 h-6 mr-1 text-gray-700 cursor-pointer dark:text-gray-100"
+                    onClick={handleLike}
+                  />
+                  <span className="font-semibold">
+                    {postDetails.likeCount}
+                  </span>
+                </div>
+              )}
+            <div className="cursor-pointer">
+              {postDetails.commentCount} Comments
+            </div>
+          </div>
           <div className="md:hidden flex mb-4 gap-2 w-full px-5">
             <input
               type="text"

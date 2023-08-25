@@ -10,6 +10,7 @@ const {
   getUser,
   uploadUserPhoto,
   resizePhoto,
+  deleteUser,
 } = require('../controllers/user');
 const {
   register,
@@ -21,6 +22,7 @@ const {
   logout,
   googleSuccess,
   isLoggedIn,
+  restrictTo,
 } = require('../controllers/auth');
 
 require('../controllers/googleAuth');
@@ -57,5 +59,9 @@ router.route('/updatePassword').patch(updatePassword);
 router.route('/me').get(getMe, getUser);
 router.route('/updateMe').patch(uploadUserPhoto, resizePhoto, updateMe);
 router.route('/deleteMe').delete(deleteMe);
+
+router.use(restrictTo('admin', 'owner'))
+
+router.route('/deleteUser/:id').delete(deleteUser)
 
 module.exports = router;

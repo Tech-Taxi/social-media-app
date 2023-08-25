@@ -33,6 +33,7 @@ const sendToken = (user, status, res) => {
 };
 
 exports.register = catchAsync(async (req, res, next) => {
+  req.body.photo = null;
   const user = await User.create(req.body);
 
   const url = `${req.protocol}://${req.get('host')}/api/v1/users/me`;
@@ -81,7 +82,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
 
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_KEY);
-  const user = await User.findById(decoded.id);
+  const user = await User.findById(decoded.id).select('+role');
   if (!user) return next(new AppError('User no longer exists', 401));
   if (user.changedPasswordAfter(decoded.iat))
     return next(
