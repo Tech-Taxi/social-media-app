@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: "Poppins";
+}
+
 body > iframe {
   display: none;
 }
