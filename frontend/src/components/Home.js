@@ -46,6 +46,7 @@ function Home() {
           const dataUser = await data;
           setLoading(false);
           setUser(dataUser.data.data);
+          
         } catch (err) {
           console.log(err.response.data.message);
           setLoading(false);
